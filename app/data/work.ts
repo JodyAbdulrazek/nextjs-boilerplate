@@ -68,7 +68,7 @@ export const experiences: Work[] = [
         ],
       },
     ],
-    tech: [],
+    tech: ["TypeScript", "React Native", "Expo"],
     skills: ["User Research", "Competitive Analysis", "Product Strategy", "Figma", "Prototyping", "Usability Testing", "Feature Development"],
   },
   {
