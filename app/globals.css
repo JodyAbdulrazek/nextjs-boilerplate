@@ -117,7 +117,6 @@ body::after {
 }
 
 .cat-svg { overflow: visible; filter: drop-shadow(0 1px 1.5px rgba(70, 70, 95, 0.3)); }
-.cat-svg .cat-leg { transform-box: fill-box; transform-origin: 50% 10%; }
 .cat-svg .cat-tail { transform-box: view-box; animation: tail-sway 2.4s ease-in-out infinite; }
 .cat-svg.is-walking .pose-sit,
 .cat-svg:not(.is-walking) .pose-walk { display: none; }
@@ -130,10 +129,6 @@ body::after {
 .cat-svg .eyes-happy { opacity: 0; }
 .cat-svg .cat-blush { opacity: 0.35; transition: opacity 0.3s; }
 
-.cat-svg.is-walking .leg-a { animation: leg-swing 0.42s ease-in-out infinite; }
-.cat-svg.is-walking .leg-b { animation: leg-swing 0.42s ease-in-out infinite reverse; }
-.cat-svg.is-walking .cat-body { animation: body-bob 0.21s ease-in-out infinite alternate; }
-.cat-svg.is-walking .cat-tail { animation-duration: 0.9s; }
 
 .cat-svg.is-petted .eyes-open { opacity: 0; }
 .cat-svg.is-petted .eyes-happy { opacity: 1; }
