@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Cat from "./components/Cat";
+import Bird from "./components/Bird";
 import { PaintDefs } from "./components/Scenery";
 import "./globals.css";
 
@@ -19,7 +19,7 @@ export default function RootLayout({
       <body className="min-h-screen overflow-x-hidden">
         <PaintDefs />
         {children}
-        <Cat />
+        <Bird />
       </body>
     </html>
   );

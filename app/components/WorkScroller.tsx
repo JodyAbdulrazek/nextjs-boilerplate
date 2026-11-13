@@ -24,8 +24,8 @@ export default function WorkScroller({ items }: { items: Work[] }) {
           <Link
             key={w.slug}
             href={`/work/${w.slug}`}
-            data-cat-stop
-            data-cat-label={`ooh, ${w.org.startsWith("Generative") ? "the robot lab" : w.org}!`}
+            data-bird-stop
+            data-bird-label={`ooh, ${w.org.startsWith("Generative") ? "the robot lab" : w.org}!`}
             className="paper group relative flex w-[78vw] max-w-[310px] shrink-0 snap-center flex-col p-4 transition-transform duration-300 hover:-translate-y-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-leaf"
             style={{ rotate: `${i % 2 ? 0.8 : -0.6}deg` }}
           >

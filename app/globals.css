@@ -1,15 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --sky-top: #8ec0ea;
-  --sky-mid: #c4e2f3;
-  --sky-low: #f6ead8;
-  --meadow: #8ccb5e;
-  --meadow-deep: #5aa852;
+  --sky-top: #24508f;
+  --sky-mid: #3d70b4;
+  --sky-low: #4a7ebf;
+  --cloud: #eef1f6;
   --cream: #fff8ec;
-  --ink: #22393f;
-  --ink-soft: #4a5d5c;
-  --leaf: #1f5a4e;
+  --ink: #1f3354;
+  --ink-soft: #4a5873;
+  --leaf: #2a5797;
   --blush: #f4a7b9;
   --sun: #f7d774;
 }
@@ -18,8 +17,7 @@
   --color-sky-top: var(--sky-top);
   --color-sky-mid: var(--sky-mid);
   --color-sky-low: var(--sky-low);
-  --color-meadow: var(--meadow);
-  --color-meadow-deep: var(--meadow-deep);
+  --color-cloud: var(--cloud);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
@@ -49,18 +47,33 @@ body::after {
   inset: 0;
   pointer-events: none;
   z-index: 60;
-  opacity: 0.13;
+  opacity: 0.07;
   mix-blend-mode: multiply;
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
+/* deep summer blue, a little lighter toward the horizon */
 .sky {
-  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-low) 100%);
+  background: linear-gradient(180deg, var(--sky-top) 0%, #3567aa 50%, var(--sky-low) 100%);
 }
 
-.meadow {
-  background: linear-gradient(180deg, #8cc758 0%, #7dbd52 40%, #8fca5c 100%);
+/* the long stretch of open sky behind the content */
+.heavens {
+  background:
+    radial-gradient(60% 30% at 85% 30%, rgba(160, 196, 236, 0.35), transparent 70%),
+    radial-gradient(50% 25% at 10% 60%, rgba(160, 196, 236, 0.25), transparent 70%),
+    linear-gradient(180deg, var(--sky-low) 0%, var(--sky-mid) 45%, #3565a9 100%);
 }
+
+.on-sky {
+  text-shadow: 0 1px 12px rgba(20, 45, 90, 0.35);
+}
+
+@keyframes ray-shimmer {
+  0%, 100% { opacity: 0.85; }
+  50% { opacity: 1; }
+}
+.rays { animation: ray-shimmer 9s ease-in-out infinite; }
 
 /* hand-made, slightly wobbly card */
 /* a slightly worn watercolor postcard */
@@ -72,7 +85,7 @@ body::after {
   border-radius: 4px;
   box-shadow:
     0 1px 0 rgba(60, 50, 30, 0.12),
-    0 12px 24px -14px rgba(31, 70, 50, 0.45);
+    0 14px 28px -14px rgba(15, 35, 80, 0.55);
 }
 
 /* ---------- drifting clouds & twinkles ---------- */
@@ -103,9 +116,9 @@ body::after {
 }
 .scroller::-webkit-scrollbar { display: none; }
 
-/* ---------- the cat ---------- */
+/* ---------- Lulu the bird ---------- */
 
-.cat-root {
+.bird-root {
   position: fixed;
   left: 0;
   top: 0;
@@ -116,51 +129,61 @@ body::after {
   will-change: transform;
 }
 
-.cat-svg { overflow: visible; filter: drop-shadow(0 1px 1.5px rgba(70, 70, 95, 0.3)); }
-.cat-svg .cat-tail { transform-box: view-box; animation: tail-sway 2.4s ease-in-out infinite; }
-.cat-svg.is-walking .pose-sit,
-.cat-svg:not(.is-walking) .pose-walk { display: none; }
-.cat-svg .cat-breathe { transform-box: view-box; animation: breathe 3.2s ease-in-out infinite; }
+.bird-svg { overflow: visible; filter: drop-shadow(0 2px 2px rgba(20, 40, 80, 0.3)); }
+.bird-svg * { transform-box: view-box; }
+.bird-svg.is-flying .pose-perch,
+.bird-svg:not(.is-flying) .pose-fly { display: none; }
+
+/* flapping */
+.bird-svg .wing-near { transform-origin: 50px 50px; animation: flap 0.24s ease-in-out infinite alternate; }
+.bird-svg .wing-far { transform-origin: 54px 48px; animation: flap-far 0.24s ease-in-out infinite alternate; }
+.bird-svg.is-flying .bird-all { animation: fly-bob 0.24s ease-in-out infinite alternate; }
+@keyframes flap { from { transform: rotate(14deg); } to { transform: rotate(-72deg); } }
+@keyframes flap-far { from { transform: rotate(8deg); } to { transform: rotate(-58deg); } }
+@keyframes fly-bob { from { transform: translateY(1.5px); } to { transform: translateY(-2.5px); } }
+
+/* perched: breathing, little head tilts and the odd hop */
+.bird-svg .bird-breathe { transform-origin: 52px 84px; animation: breathe 2.6s ease-in-out infinite; }
 @keyframes breathe {
   0%, 100% { transform: scale(1, 1); }
-  50% { transform: scale(1.015, 1.03); }
+  50% { transform: scale(1.025, 1.035); }
 }
-.cat-svg .cat-head { transform-box: view-box; transition: transform 0.3s; }
-.cat-svg .eyes-happy { opacity: 0; }
-.cat-svg .cat-blush { opacity: 0.35; transition: opacity 0.3s; }
-
-
-.cat-svg.is-petted .eyes-open { opacity: 0; }
-.cat-svg.is-petted .eyes-happy { opacity: 1; }
-.cat-svg.is-petted .cat-blush { opacity: 1; }
-.cat-svg.is-petted .cat-head { animation: nuzzle 0.6s ease-in-out infinite alternate; }
-.cat-svg.is-petted .cat-tail { animation-duration: 0.7s; }
-
-/* blink every few seconds when not petted */
-.cat-svg:not(.is-petted) .eyes-open { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
-
-@keyframes leg-swing {
-  0%, 100% { transform: rotate(16deg); }
-  50% { transform: rotate(-16deg); }
+.bird-svg .bird-head { transform-origin: 60px 46px; transition: transform 0.3s; }
+.bird-svg:not(.is-flying):not(.is-petted) .bird-head { animation: head-tilt 6.5s ease-in-out infinite; }
+@keyframes head-tilt {
+  0%, 38%, 62%, 100% { transform: rotate(0deg); }
+  44%, 56% { transform: rotate(-13deg); }
 }
-@keyframes body-bob {
-  from { transform: translateY(0); }
-  to { transform: translateY(-2px); }
+.bird-svg:not(.is-flying):not(.is-petted) .bird-hop { animation: hop 7.5s ease-in-out infinite; }
+@keyframes hop {
+  0%, 80%, 90%, 100% { transform: translateY(0); }
+  84% { transform: translateY(-6px); }
+  86% { transform: translateY(-6px); }
 }
-@keyframes tail-sway {
-  0%, 100% { transform: rotate(-6deg); }
-  50% { transform: rotate(10deg); }
-}
+
+.bird-svg .eyes-happy { opacity: 0; }
+.bird-svg .bird-blush { opacity: 0.45; transition: opacity 0.3s; }
+.bird-svg.is-petted .eyes-open { opacity: 0; }
+.bird-svg.is-petted .eyes-happy { opacity: 1; }
+.bird-svg.is-petted .bird-blush { opacity: 1; }
+.bird-svg.is-petted .bird-head { animation: nuzzle 0.5s ease-in-out infinite alternate; }
+.bird-svg.is-petted .wing-folded { transform-origin: 36px 50px; animation: flutter 0.18s ease-in-out infinite alternate; }
+.bird-svg:not(.is-petted) .eyes-open { transform-origin: 69px 34px; animation: blink 4.2s infinite; }
+
 @keyframes nuzzle {
-  from { transform: rotate(-7deg); }
-  to { transform: rotate(5deg) translateY(1px); }
+  from { transform: rotate(-9deg); }
+  to { transform: rotate(6deg) translateY(1px); }
+}
+@keyframes flutter {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(-14deg); }
 }
 @keyframes blink {
   0%, 92%, 100% { transform: scaleY(1); }
   95% { transform: scaleY(0.1); }
 }
 
-.cat-bubble {
+.bird-bubble {
   position: absolute;
   bottom: calc(100% + 6px);
   left: 50%;
@@ -173,11 +196,11 @@ body::after {
   font-size: 0.95rem;
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
-  box-shadow: 0 6px 16px -6px rgba(31, 80, 60, 0.4);
+  box-shadow: 0 6px 16px -6px rgba(20, 40, 90, 0.45);
   pointer-events: none;
   animation: pop 0.25s ease-out;
 }
-.cat-bubble::after {
+.bird-bubble::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -191,7 +214,7 @@ body::after {
   to { transform: translateX(-50%) scale(1); opacity: 1; }
 }
 
-.cat-heart {
+.bird-heart {
   position: absolute;
   left: 60%;
   top: 10%;
@@ -201,6 +224,7 @@ body::after {
   animation: heart-float 1.4s ease-out forwards;
   opacity: 0;
 }
+.bird-heart.is-note { color: #fff4c9; text-shadow: 0 1px 3px rgba(20, 40, 90, 0.5); }
 @keyframes heart-float {
   0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
   20% { opacity: 1; }
@@ -208,6 +232,6 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .drift, .drift-slow, .sparkle, .bob { animation: none; }
+  .drift, .drift-slow, .sparkle, .bob, .rays { animation: none; }
   html { scroll-behavior: auto; }
 }
