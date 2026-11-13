@@ -67,7 +67,8 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const prev = allWork[(index - 1 + allWork.length) % allWork.length];
   const meta = [w.dates, w.location].filter(Boolean).join("  ·  ");
   const backTo = w.kind === "project" ? "projects" : w.kind === "leadership" ? "leadership" : "experiences";
-  const chapters = w.story.length + 1; // story sections + skills
+  const extras = w.extras ?? [];
+  const chapters = w.story.length + extras.length + 1; // story sections + extras + skills
 
   return (
     <main>
@@ -116,6 +117,31 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
                     );
                   })}
                 </ul>
+              </Chapter>
+            ))}
+
+            {extras.map((ex, ei) => (
+              <Chapter key={ex.heading} n={w.story.length + ei + 1} of={chapters} title={ex.heading}>
+                {ex.intro && <p className="text-lg leading-relaxed text-ink-soft">{ex.intro}</p>}
+                {ex.items && (
+                  <ul className={`grid gap-6 ${ex.intro ? "mt-6" : ""}`}>
+                    {ex.items.map((item, i) => (
+                      <li key={item.title} className="flex gap-4">
+                        <span className="mt-1">
+                          <Bullet color={BULLET_TINTS[(ei + i) % BULLET_TINTS.length]} size={22} />
+                        </span>
+                        <p className="text-lg leading-relaxed text-ink-soft">
+                          <span className="text-ink">{item.title}:</span> {item.text}
+                        </p>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+                {ex.outro?.map((line) => (
+                  <p key={line} className="mt-6 text-lg italic leading-relaxed text-ink-soft">
+                    {line}
+                  </p>
+                ))}
               </Chapter>
             ))}
 

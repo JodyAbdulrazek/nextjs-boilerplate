@@ -6,6 +6,8 @@
 
 export type StoryHeading = "What I explored" | "What I worked on" | "What I built" | "The impact";
 export type StorySection = { heading: StoryHeading; items: string[] };
+/** Extra detail-page sections, shown after the story (e.g. suggested features) */
+export type ExtraSection = { heading: string; intro?: string; items?: { title: string; text: string }[]; outro?: string[] };
 
 export type Work = {
   slug: string;
@@ -21,6 +23,7 @@ export type Work = {
   /** One-line summary for cards */
   tagline: string;
   story: StorySection[];
+  extras?: ExtraSection[];
   /**
    * Order of the bullets as originally written, as indexes into the story's items
    * read top to bottom. Omit when the story already follows that order.
@@ -41,24 +44,61 @@ export const experiences: Work[] = [
     location: "Remote",
     dates: "August 2026 – Present",
     color: "#F6B8C8",
-    tagline: "Understanding why users disengage on a 40M-user platform",
+    tagline: "Making interactions between close friends more meaningful",
     story: [
       {
         heading: "What I explored",
         items: [
-          "Analyzed user engagement and behavior across BeReal's 40M-user platform to understand why users disengage and where the experience could improve.",
-          "Compared BeReal's features and user journeys with TikTok, Instagram, and Snapchat to identify engagement gaps, drop-off points, and opportunities to increase monthly active users.",
+          "Studied user engagement and compared BeReal with TikTok, Instagram, and Snapchat.",
+          "Identified opportunities to make interactions between close friends more meaningful.",
         ],
       },
       {
         heading: "What I built",
         items: [
-          "Designed and tested a clickable feature prototype, gathered user feedback, and used the findings to develop a feature proposal and rollout strategy presented to BeReal leadership.",
+          "Designed a clickable prototype for BeReal Circles, a feature that allows users to create private groups with close friends.",
+          "Explored group activity, reactions, and optional reminders to encourage meaningful interactions.",
+          "Used user feedback to refine the concept and presented a feature proposal and rollout strategy to BeReal leadership.",
         ],
       },
     ],
+    extras: [
+      {
+        heading: "Suggested BeReal Features",
+        items: [
+          { title: "Daily Memories", text: "Let users revisit past BeReal posts from the same day in previous years to encourage them to keep sharing." },
+          { title: "BeReal Circles", text: "Allow users to create smaller groups with close friends and interact through private group activity." },
+          { title: "Daily Friend Prompts", text: "Give friends optional daily questions to answer through comments or reactions, creating more conversations." },
+          { title: "RealMoji Improvements", text: "Make it easier to react to friends' posts with personalized expressions and more interactive reactions." },
+          {
+            title: "Personal Activity Recap",
+            text: "Show users their posting history, memories, and interactions over the past month without public rankings or competitive streaks.",
+          },
+        ],
+      },
+      {
+        heading: "Recommended Technologies",
+        intro: "Use the following technology stack for the mobile feature prototype:",
+        items: [
+          { title: "TypeScript", text: "Main application language." },
+          { title: "React Native", text: "Build the mobile app." },
+          { title: "Expo", text: "Run and test the mobile prototype." },
+          { title: "Firebase", text: "User accounts, database, and notifications." },
+          { title: "Figma", text: "Design the screens before coding." },
+        ],
+        outro: [
+          "Recommended stack: TypeScript + React Native + Expo.",
+          "This combination is suitable for building a realistic mobile social media prototype.",
+        ],
+      },
+      {
+        heading: "Project Direction",
+        intro:
+          "Focus on BeReal Circles or Daily Memories first. Both are manageable projects that demonstrate product research, feature design, development, usability testing, and iteration.",
+      },
+    ],
     tech: [],
-    skills: ["User engagement analysis", "Competitive analysis", "Prototyping", "User feedback", "Feature proposals", "Rollout strategy"],
+    skills: ["User Research", "Competitive Analysis", "Product Strategy", "Figma", "Prototyping", "Usability Testing", "Feature Development"],
   },
   {
     slug: "codepath",
