@@ -64,7 +64,6 @@ export default function Home() {
       <section id="projects" className="relative scroll-mt-4 pb-28 pt-12">
         <div className="relative mx-auto max-w-6xl px-5">
           <h2 className="text-5xl text-leaf sm:text-6xl">Personal &amp; Passion Projects</h2>
-          <p className="mt-2 max-w-xl text-lg italic text-ink-soft">things I build because I can&apos;t stop thinking about them</p>
 
           <div className="mt-12 grid gap-6">
             {projects.map((p, i) => (
