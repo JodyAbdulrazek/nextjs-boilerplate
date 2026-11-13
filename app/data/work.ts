@@ -56,39 +56,15 @@ export const experiences: Work[] = [
       {
         heading: "What I built",
         items: [
-          "Designed a clickable prototype for BeReal Circles, a feature that allows users to create private groups with close friends.",
-          "Explored group activity, reactions, and optional reminders to encourage meaningful interactions.",
-          "Used user feedback to refine the concept and presented a feature proposal and rollout strategy to BeReal leadership.",
+          "Designed a clickable prototype for Daily Memories, a feature that lets users revisit past BeReal posts from the same day in previous years to encourage them to keep sharing.",
         ],
       },
     ],
     extras: [
       {
-        heading: "Suggested BeReal Features",
+        heading: "Features",
         items: [
           { title: "Daily Memories", text: "Let users revisit past BeReal posts from the same day in previous years to encourage them to keep sharing." },
-          { title: "BeReal Circles", text: "Allow users to create smaller groups with close friends and interact through private group activity." },
-          { title: "Daily Friend Prompts", text: "Give friends optional daily questions to answer through comments or reactions, creating more conversations." },
-          { title: "RealMoji Improvements", text: "Make it easier to react to friends' posts with personalized expressions and more interactive reactions." },
-          {
-            title: "Personal Activity Recap",
-            text: "Show users their posting history, memories, and interactions over the past month without public rankings or competitive streaks.",
-          },
-        ],
-      },
-      {
-        heading: "Recommended Technologies",
-        intro: "Use the following technology stack for the mobile feature prototype:",
-        items: [
-          { title: "TypeScript", text: "Main application language." },
-          { title: "React Native", text: "Build the mobile app." },
-          { title: "Expo", text: "Run and test the mobile prototype." },
-          { title: "Firebase", text: "User accounts, database, and notifications." },
-          { title: "Figma", text: "Design the screens before coding." },
-        ],
-        outro: [
-          "Recommended stack: TypeScript + React Native + Expo.",
-          "This combination is suitable for building a realistic mobile social media prototype.",
         ],
       },
       {
