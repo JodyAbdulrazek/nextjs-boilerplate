@@ -40,7 +40,7 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto mt-24 w-full max-w-3xl px-5 text-center text-ink">
           <p className="text-xl italic text-ink-soft">hello, I&apos;m</p>
-          <h1 className="name-thin mt-2 text-6xl leading-none sm:text-8xl">Judy Abdelrazek</h1>
+          <h1 className="name-thin mt-2 text-4xl leading-tight sm:text-5xl">Judy Abdelrazek</h1>
           <p className="mx-auto mt-6 max-w-xl text-xl leading-snug">
             a Computer Science &amp; Business student at Virginia Commonwealth University.
           </p>
@@ -69,7 +69,7 @@ export default function Home() {
           const nextSection = SECTIONS[si + 1];
           return (
             <section key={section.id} id={section.id} className="relative mx-auto max-w-3xl scroll-mt-10 px-5 pt-24">
-              <h2 data-pup-stop data-pup-label="follow me! 🐾" className="text-5xl text-leaf sm:text-6xl">
+              <h2 data-pup-stop data-pup-label="follow me! 🐾" className="text-4xl leading-tight text-leaf sm:text-5xl">
                 {section.title}
               </h2>
               <div aria-hidden className="h-12" />

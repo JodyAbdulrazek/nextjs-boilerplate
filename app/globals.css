@@ -214,7 +214,7 @@ body::after {
   font-weight: 400;
   color: #34486a;
   letter-spacing: 0.01em;
-  -webkit-text-stroke: 1.4px #e2f1fc;
+  -webkit-text-stroke: 0.8px #e2f1fc;
 }
 
 /* ---------- journey arrows ---------- */
