@@ -10,7 +10,6 @@ function rng(seed: number) {
     return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
   };
 }
-const n = (v: number) => Math.round(v * 10) / 10;
 
 /* ---------- shared paint filters (rendered once in the layout) ---------- */
 
@@ -96,30 +95,6 @@ export function SparkleField({
         </span>
       ))}
     </div>
-  );
-}
-
-/* ---------- a soft painted color swatch (card headers) ---------- */
-
-export function PaintSwatch({ color, seed = 1, className = "" }: { color: string; seed?: number; className?: string }) {
-  const r = rng(seed * 31);
-  return (
-    <svg viewBox="0 0 300 80" preserveAspectRatio="none" className={`pointer-events-none block w-full ${className}`} aria-hidden>
-      <g filter="url(#paint-soft)">
-        <rect x="6" y="8" width="288" height="64" fill={color} />
-        {Array.from({ length: 7 }, (_, i) => (
-          <path
-            key={i}
-            d={`M${n(10 + r() * 40)} ${n(14 + i * 9)} q ${n(80 + r() * 40)} ${n((r() - 0.5) * 8)} ${n(200 + r() * 70)} ${n((r() - 0.5) * 6)}`}
-            stroke="#FFFFFF"
-            strokeOpacity={n(0.08 + r() * 0.1)}
-            strokeWidth={n(2 + r() * 2.5)}
-            fill="none"
-            strokeLinecap="round"
-          />
-        ))}
-      </g>
-    </svg>
   );
 }
 

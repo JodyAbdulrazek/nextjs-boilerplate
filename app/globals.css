@@ -226,7 +226,7 @@ body::after {
 .journey-arrow.is-bouncing { animation: arrow-hop 2.4s ease-in-out infinite; }
 @keyframes arrow-hop {
   0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(5px) rotate(-4deg); }
+  50% { transform: translateY(5px); }
 }
 @media (prefers-reduced-motion: reduce) {
   .journey-arrow, .journey-arrow:hover, .journey-arrow.is-bouncing { animation: none; }

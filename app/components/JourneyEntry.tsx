@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { bulletsOf, type Work } from "../data/work";
 import OrgLogo from "./OrgLogo";
-import { Bullet, PaintSwatch } from "./Scenery";
+import { Bullet } from "./Scenery";
 import TechChips from "./TechChips";
 
 const TINTS = ["#9CC6EC", "#F4A7B9", "#F3D27A", "#B9A8E2", "#8FCFD6"];
@@ -25,7 +25,6 @@ export default function JourneyEntry({ work: w, index }: { work: Work; index: nu
         </h3>
         <p className="mt-1 text-xl italic text-leaf">{w.role}</p>
         {meta && <p className="mt-1 text-base text-ink-soft">{meta}</p>}
-        <PaintSwatch color={w.color} seed={index + 5} className="mt-4 h-3 max-w-[11rem]" />
 
         <ul className="mt-6 space-y-4">
           {bulletsOf(w).map((b, i) => (

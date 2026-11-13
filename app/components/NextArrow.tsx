@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * A little hand-lettered arrow between entries. Clicking it glides the page to the
+ * A little hand-drawn arrow between entries. Clicking it glides the page to the
  * next entry and asks Lulu to trot over there too.
  */
 export default function NextArrow({ to, label, up = false, hero = false }: { to: string; label: string; up?: boolean; hero?: boolean }) {
@@ -12,26 +12,18 @@ export default function NextArrow({ to, label, up = false, hero = false }: { to:
     window.dispatchEvent(new CustomEvent("pup:goto", { detail: { id: to } }));
   };
 
-  // a looping, cursive flourish that ends in a curved arrowhead, like it was drawn with a pen
+  // a simple, gently curving arrow, like a quick pencil stroke
   const icon = (
-    <svg viewBox="0 0 40 56" width="40" height="56" aria-hidden className={up ? "rotate-180" : ""}>
+    <svg viewBox="0 0 32 56" width="30" height="52" aria-hidden className={up ? "rotate-180" : ""}>
+      <path d="M16.2 5 C 14.6 16, 17.6 29, 15.9 47.5" stroke="currentColor" strokeWidth="1.8" fill="none" strokeLinecap="round" />
       <path
-        d="M24.5 4.5 C 31 7.5, 32 17, 24.5 19.5 C 17 22, 12.5 14.5, 18.5 12 C 25.5 9.5, 27 23, 22 33.5 C 20 38.5, 19.6 44, 20 50"
+        d="M9.8 39.8 C 12.6 42.4, 14.6 44.9, 15.9 48.6 C 17.3 45.3, 19.4 42.8, 22.4 40.4"
         stroke="currentColor"
-        strokeWidth="2.4"
+        strokeWidth="1.8"
         fill="none"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
-      <path
-        d="M12.5 40.5 C 15.5 43, 18.3 46, 20 51 C 21.6 46.4, 24.2 43.6, 28 41.5"
-        stroke="currentColor"
-        strokeWidth="2.4"
-        fill="none"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path d="M31.5 27 l1.6 -1.2 M32.5 30.5 l2 0.2" stroke="#F4A7B9" strokeWidth="1.5" strokeLinecap="round" />
     </svg>
   );
 

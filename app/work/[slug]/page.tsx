@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "../../components/Footer";
 import OrgLogo from "../../components/OrgLogo";
-import { Bullet, PaintSwatch, SparkleField } from "../../components/Scenery";
+import { Bullet, SparkleField } from "../../components/Scenery";
 import TechChips from "../../components/TechChips";
 import { allWork, getWork, KIND_LABEL } from "../../data/work";
 
@@ -88,9 +88,6 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
             <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">{w.org}</h1>
             <p className="mt-3 text-2xl italic text-leaf">{w.role}</p>
             {meta && <p className="mt-3 text-lg text-ink-soft">{meta}</p>}
-            <div className="mx-auto mt-8 max-w-md">
-              <PaintSwatch color={w.color} seed={index + 3} className="h-4" />
-            </div>
             <p className="mx-auto mt-6 max-w-2xl text-xl italic text-ink-soft">{w.tagline}</p>
           </div>
         </div>
