@@ -52,7 +52,7 @@ export default function Home() {
             {INTERESTS.map((t, i) => (
               <span key={t}>
                 <span className="whitespace-nowrap">{t}</span>
-                {i < INTERESTS.length - 1 && <span className="mx-2 not-italic text-blush">♡</span>}{" "}
+                {i < INTERESTS.length - 1 && <span className="mx-2 not-italic text-blush">–</span>}{" "}
               </span>
             ))}
           </p>
