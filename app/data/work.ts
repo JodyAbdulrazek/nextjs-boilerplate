@@ -1,16 +1,30 @@
+/**
+ * Portfolio content. Every bullet is the exact wording Judy provided; each entry's
+ * bullets are arranged into a short story (what I explored → what I worked on →
+ * what I built / the impact) for its detail page.
+ */
+
+export type StoryHeading = "What I explored" | "What I worked on" | "What I built" | "The impact";
+export type StorySection = { heading: StoryHeading; items: string[] };
+
 export type Work = {
   slug: string;
-  kind: "experience" | "project";
+  kind: "experience" | "project" | "leadership";
   org: string;
   role: string;
   location?: string;
   dates?: string;
   /** Card accent color */
   color: string;
-  /** Organization logo in /public/logos — `wide` for wordmarks */
+  /** Organization logo in /public/logos (`wide` for wordmarks) */
   logo?: { src: string; wide?: boolean };
+  /** One-line summary for cards */
   tagline: string;
-  bullets: string[];
+  /** The problem or question at the heart of the work, drawn from the bullets */
+  question: string;
+  story: StorySection[];
+  /** Only technologies named in the source content */
+  tech: string[];
   skills: string[];
 };
 
@@ -20,17 +34,29 @@ export const experiences: Work[] = [
     logo: { src: "/logos/bereal.png" },
     kind: "experience",
     org: "BeReal",
-    role: "Product Manager Apprenticeship",
+    role: "Product Manager Apprentice",
     location: "Remote",
     dates: "August 2026 – Present",
     color: "#F6B8C8",
-    tagline: "Finding engagement gaps on a 40M-user social platform",
-    bullets: [
-      "Analyzed user behavior and product features to understand engagement patterns and identify opportunities to improve the user experience on BeReal.",
-      "Mapped user behavior across BeReal's 40M-user platform and compared TikTok, Instagram, and Snapchat to identify engagement gaps, user drop-off points, and opportunities to grow monthly active users (MAUs).",
-      "Designed and tested a clickable feature prototype using usability testing and real user feedback, turning findings into a feature proposal and rollout strategy presented to BeReal leadership.",
+    tagline: "Understanding why users disengage on a 40M-user platform",
+    question: "Why do users disengage from BeReal, and where could the experience improve?",
+    story: [
+      {
+        heading: "What I explored",
+        items: [
+          "Analyzed user engagement and behavior across BeReal's 40M-user platform to understand why users disengage and where the experience could improve.",
+          "Compared BeReal's features and user journeys with TikTok, Instagram, and Snapchat to identify engagement gaps, drop-off points, and opportunities to increase monthly active users.",
+        ],
+      },
+      {
+        heading: "What I built",
+        items: [
+          "Designed and tested a clickable feature prototype, gathered user feedback, and used the findings to develop a feature proposal and rollout strategy presented to BeReal leadership.",
+        ],
+      },
     ],
-    skills: ["Product Strategy", "User Research", "Competitive Analysis", "Prototyping", "Usability Testing"],
+    tech: [],
+    skills: ["User engagement analysis", "Competitive analysis", "Prototyping", "User feedback", "Feature proposals", "Rollout strategy"],
   },
   {
     slug: "codepath",
@@ -41,13 +67,23 @@ export const experiences: Work[] = [
     location: "Remote",
     dates: "August 2026 – Present",
     color: "#A9D3F5",
-    tagline: "Building real AI apps end-to-end with Claude Code",
-    bullets: [
-      "Built a fully functional AI-powered therapy chat app using Claude Code, applying AI engineering skills to develop a real-world application.",
-      "Strengthened AI fluency and vibe-coding skills by using Claude and Claude Code to build applications end-to-end.",
-      "Developed an advanced open-source capstone project, demonstrating practical AI engineering and application development skills.",
+    tagline: "Turning ideas into working AI applications with Claude Code",
+    question: "How do you turn an idea into a working AI application, from start to finish?",
+    story: [
+      {
+        heading: "What I worked on",
+        items: ["Used Claude and Claude Code to plan, build, test, and improve application features from start to finish."],
+      },
+      {
+        heading: "What I built",
+        items: [
+          "Built an AI-powered therapy chat application using Claude Code, turning an idea into a working application.",
+          "Developed an open-source capstone project, applying AI engineering concepts to solve a real-world problem.",
+        ],
+      },
     ],
-    skills: ["Claude Code", "AI Engineering", "App Development", "Open Source"],
+    tech: ["Claude", "Claude Code"],
+    skills: ["AI engineering", "Planning, building & testing features", "Open-source development"],
   },
   {
     slug: "gen-ai-robotics-lab",
@@ -58,97 +94,186 @@ export const experiences: Work[] = [
     location: "Richmond, VA",
     dates: "August 2026 – Present",
     color: "#C9B8F0",
-    tagline: "Teaching robots to understand tasks and work alongside people",
-    bullets: [
-      "Developed AI-powered robotics applications by integrating generative AI with mobile robots, drones, and collaborative robots to support autonomous decision-making and human-robot interaction.",
-      "Built and tested AI-driven robotic workflows using Python and AI frameworks, evaluating how robots can better understand tasks, make decisions, and work alongside people.",
-      "Collaborated with an interdisciplinary research team to prototype, test, and present robotics solutions, contributing to research demonstrations and publications.",
+    tagline: "Helping robots understand instructions and interact with people",
+    question: "How could generative AI help robots better understand instructions, make decisions, and interact with people?",
+    story: [
+      {
+        heading: "What I explored",
+        items: ["Explored how generative AI could help robots better understand instructions, make decisions, and interact with people."],
+      },
+      {
+        heading: "What I built",
+        items: ["Developed and tested AI-powered workflows for mobile robots, drones, and collaborative robots using Python and AI frameworks."],
+      },
+      {
+        heading: "What I worked on",
+        items: ["Worked with an interdisciplinary research team to build prototypes, test solutions, and present research findings."],
+      },
     ],
-    skills: ["Python", "Generative AI", "Robotics", "Human-Robot Interaction", "Research"],
+    tech: ["Python", "AI frameworks", "Generative AI"],
+    skills: ["Research", "Prototyping", "Testing", "Interdisciplinary collaboration", "Presenting findings"],
   },
   {
     slug: "be-fluent",
     kind: "experience",
     org: "Be Fluent Language Academy",
-    role: "EdTech Program Manager",
+    role: "Founder",
     location: "Washington, DC",
     dates: "August 2021 – August 2023",
     color: "#F7D774",
-    tagline: "Founded and scaled a language platform for 1,000+ learners",
-    bullets: [
-      "Founded and scaled a language-learning platform serving 1,000+ global learners in English, French, German, Arabic, and Spanish, built on cognitive learning research, immersive technology, and storytelling.",
-      "Shaped the product vision and roadmap through hands-on market and competitive research to identify gaps in the language-learning industry.",
-      "Led in-depth user research and persona development, translating learner needs into prioritized features and measurable OKRs/KPIs.",
+    tagline: "Founded and grew a language platform for 1,000+ learners",
+    question: "How could language learning become more engaging and accessible?",
+    story: [
+      {
+        heading: "What I explored",
+        items: [
+          "Researched the language learning market, studied competing platforms, and identified opportunities to make language learning more engaging and accessible.",
+        ],
+      },
+      {
+        heading: "What I worked on",
+        items: [
+          "Conducted user research, developed learner personas, and used feedback to shape the product roadmap, prioritize features, and establish measurable goals (OKRs/KPIs).",
+          "Used cognitive learning research, storytelling, and immersive technology to develop a more interactive learning experience.",
+        ],
+      },
+      {
+        heading: "The impact",
+        items: [
+          "Founded and grew a language learning platform serving 1,000+ learners worldwide across English, French, German, Arabic, and Spanish.",
+        ],
+      },
     ],
-    skills: ["Product Vision", "Roadmapping", "Market Research", "User Personas", "OKRs & KPIs"],
-  },
-  {
-    slug: "technica",
-    logo: { src: "/logos/technica.png", wide: true },
-    kind: "experience",
-    org: "Technica",
-    role: "Software Developer Fellow",
-    location: "College Park, Maryland",
-    dates: "June 2026 – August 2026",
-    color: "#9FDBB4",
-    tagline: "An AI-powered task manager, built the Agile way",
-    bullets: [
-      "Built an AI-powered task management application by developing task organization, deadline tracking, and automated reminder features based on project and user requirements.",
-      "Delivered product features within an Agile development environment by collaborating with teammates through Git/GitHub and iterating on functionality throughout development.",
-      "Improved task-management functionality by integrating AI capabilities and refining features based on user needs and project requirements.",
+    tech: ["Immersive technology"],
+    skills: [
+      "Market research",
+      "Competitive analysis",
+      "User research",
+      "Learner personas",
+      "Product roadmapping",
+      "Feature prioritization",
+      "OKRs & KPIs",
+      "Cognitive learning research",
+      "Storytelling",
     ],
-    skills: ["AI Integration", "Agile", "Git & GitHub", "Feature Development"],
   },
   {
     slug: "kode-with-klossy",
     logo: { src: "/logos/kode-with-klossy.jpg" },
     kind: "experience",
-    org: "Kode with Klossy",
+    org: "Kode With Klossy",
     role: "Machine Learning Engineer Fellow",
     location: "Washington, DC",
     dates: "June 2025 – July 2025",
     color: "#F9C59B",
-    tagline: "GPT-4 powered, personalized mental health support",
-    bullets: [
-      "Built an AI-powered mental health support platform by collaborating with a team to integrate GPT-4 for personalized conversations, wellness recommendations, mood tracking, and goal setting, expanding the platform's ability to provide personalized wellness support.",
-      "Enabled personalized user interactions by implementing NLP workflows with Python, Hugging Face, and OpenAI APIs, supporting responsive conversations and individualized wellness recommendations while prioritizing secure data handling.",
+    tagline: "AI-powered, personalized mental health support",
+    question: "How can AI address the need for more personalized wellness support?",
+    story: [
+      {
+        heading: "What I built",
+        items: [
+          "Collaborated with a team to build an AI-powered mental health support platform using GPT-4, addressing the need for more personalized wellness support.",
+        ],
+      },
+      {
+        heading: "What I worked on",
+        items: [
+          "Developed NLP workflows using Python, Hugging Face, and OpenAI APIs to support personalized conversations, wellness recommendations, mood tracking, and goal setting.",
+          "Focused on creating responsive user interactions while considering secure handling of user information.",
+        ],
+      },
     ],
-    skills: ["Python", "NLP", "Hugging Face", "OpenAI API", "GPT-4"],
-  },
-  {
-    slug: "rewriting-the-code",
-    logo: { src: "/logos/rewriting-the-code.png" },
-    kind: "experience",
-    org: "Rewriting the Code",
-    role: "Mentor",
-    location: "Richmond, VA",
-    dates: "March 2025 – August 2025",
-    color: "#F4A7B9",
-    tagline: "15+ hands-on workshops on generative AI tools",
-    bullets: [
-      "Facilitated 15+ technical workshops on generative AI and emerging AI tools, increasing AI adoption and literacy by 25% and task completion by 35% through hands-on training in research, brainstorming, problem-solving, and project development.",
-    ],
-    skills: ["Workshops", "Generative AI", "Teaching", "Mentorship"],
+    tech: ["GPT-4", "Python", "Hugging Face", "OpenAI APIs", "NLP"],
+    skills: ["Team collaboration", "NLP workflows", "Responsive user interactions", "Secure handling of user information"],
   },
 ];
 
 export const projects: Work[] = [
   {
+    slug: "ai-task-management-app",
+    kind: "project",
+    org: "AI Task Management App",
+    role: "AI Productivity Platform",
+    color: "#9FDBB4",
+    tagline: "Helping people organize tasks, manage deadlines, and stay productive",
+    question: "How can AI help people organize tasks, manage deadlines, and improve productivity?",
+    story: [
+      {
+        heading: "What I built",
+        items: [
+          "Built an AI-powered task management application using TypeScript, Python, and Claude API to help users organize tasks, manage deadlines, and improve productivity.",
+          "Developed features for AI task prioritization, smart scheduling, automated reminders, and breaking larger projects into manageable steps.",
+        ],
+      },
+      {
+        heading: "What I worked on",
+        items: ["Designed, tested, and refined application features to create a more personalized and efficient task management experience."],
+      },
+    ],
+    tech: ["TypeScript", "Python", "Claude API"],
+    skills: ["AI task prioritization", "Smart scheduling", "Automated reminders", "Designing, testing & refining features"],
+  },
+  {
     slug: "therapy-cafe",
     kind: "project",
     org: "Therapy Cafe",
-    role: "AI Mental Health Support",
+    role: "AI Mental Health Support Platform",
     color: "#E8C9A8",
-    tagline: "A cozy corner of the internet to talk, reflect, and grow",
-    bullets: [
-      "Developed an AI-powered mental health support platform leveraging GPT-4 to provide personalized conversations, wellness recommendations, mood tracking, and goal-setting features.",
-      "Implemented natural language processing workflows using Python, Hugging Face, and OpenAI APIs to deliver personalized user interactions while prioritizing secure data handling.",
+    tagline: "Personalized conversations, wellness recommendations, and mood tracking",
+    question: "How can AI provide more personalized mental health support?",
+    story: [
+      {
+        heading: "What I built",
+        items: [
+          "Built an AI-powered mental health support platform using GPT-4 to provide personalized conversations, wellness recommendations, mood tracking, and goal setting.",
+        ],
+      },
+      {
+        heading: "What I worked on",
+        items: ["Integrated Python, Hugging Face, and OpenAI APIs to develop NLP workflows and support personalized user interactions."],
+      },
     ],
-    skills: ["GPT-4", "Python", "NLP", "Hugging Face", "OpenAI API"],
+    tech: ["GPT-4", "Python", "Hugging Face", "OpenAI APIs", "NLP"],
+    skills: ["NLP workflows", "Personalized user interactions"],
   },
 ];
 
-export const allWork: Work[] = [...experiences, ...projects];
+export const leadership: Work[] = [
+  {
+    slug: "rewriting-the-code",
+    logo: { src: "/logos/rewriting-the-code.png" },
+    kind: "leadership",
+    org: "Rewriting the Code",
+    role: "Mentor",
+    location: "Richmond, VA",
+    dates: "March 2025 – August 2025",
+    color: "#F4A7B9",
+    tagline: "15+ hands-on workshops introducing students to generative AI",
+    question: "How can students learn to use generative AI in practical ways in their work?",
+    story: [
+      {
+        heading: "What I worked on",
+        items: ["Led 15+ hands-on workshops introducing students to generative AI, emerging tools, and practical ways to use AI in their work."],
+      },
+      {
+        heading: "The impact",
+        items: [
+          "Helped participants apply AI to research, brainstorming, problem-solving, and project development, contributing to a 25% increase in AI adoption and literacy and a 35% improvement in task completion.",
+        ],
+      },
+    ],
+    tech: ["Generative AI"],
+    skills: ["Workshop facilitation", "Mentoring", "Teaching AI literacy"],
+  },
+];
+
+export const allWork: Work[] = [...experiences, ...projects, ...leadership];
+
+export const KIND_LABEL: Record<Work["kind"], string> = {
+  experience: "experience",
+  project: "passion project",
+  leadership: "leadership",
+};
 
 export function getWork(slug: string): Work | undefined {
   return allWork.find((w) => w.slug === slug);
