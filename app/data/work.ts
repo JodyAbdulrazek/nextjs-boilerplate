@@ -7,6 +7,8 @@ export type Work = {
   dates?: string;
   /** Card accent color */
   color: string;
+  /** Organization logo in /public/logos — `wide` for wordmarks */
+  logo?: { src: string; wide?: boolean };
   tagline: string;
   bullets: string[];
   skills: string[];
@@ -15,6 +17,7 @@ export type Work = {
 export const experiences: Work[] = [
   {
     slug: "bereal",
+    logo: { src: "/logos/bereal.png" },
     kind: "experience",
     org: "BeReal",
     role: "Product Manager Apprenticeship",
@@ -31,6 +34,7 @@ export const experiences: Work[] = [
   },
   {
     slug: "codepath",
+    logo: { src: "/logos/codepath.png" },
     kind: "experience",
     org: "CodePath",
     role: "Applied AI Engineering Fellow",
@@ -47,6 +51,7 @@ export const experiences: Work[] = [
   },
   {
     slug: "gen-ai-robotics-lab",
+    logo: { src: "/logos/vcu.png" },
     kind: "experience",
     org: "Generative AI & Collaborative Robotics Lab",
     role: "Researcher · Virginia Commonwealth University",
@@ -79,6 +84,7 @@ export const experiences: Work[] = [
   },
   {
     slug: "technica",
+    logo: { src: "/logos/technica.png", wide: true },
     kind: "experience",
     org: "Technica",
     role: "Software Developer Fellow",
@@ -95,6 +101,7 @@ export const experiences: Work[] = [
   },
   {
     slug: "kode-with-klossy",
+    logo: { src: "/logos/kode-with-klossy.jpg" },
     kind: "experience",
     org: "Kode with Klossy",
     role: "Machine Learning Engineer Fellow",
@@ -110,6 +117,7 @@ export const experiences: Work[] = [
   },
   {
     slug: "rewriting-the-code",
+    logo: { src: "/logos/rewriting-the-code.png" },
     kind: "experience",
     org: "Rewriting the Code",
     role: "Mentor",

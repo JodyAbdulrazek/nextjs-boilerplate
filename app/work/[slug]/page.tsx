@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "../../components/Footer";
+import OrgLogo from "../../components/OrgLogo";
 import { Cloud, Flower, FlowerHill, GrassTexture, PaintSwatch, SparkleField } from "../../components/Scenery";
 import { allWork, getWork } from "../../data/work";
 
@@ -63,7 +64,8 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
             ← back to the meadow
           </Link>
 
-          <div className="mt-16 text-center">
+          <div className="mt-12 text-center">
+            {w.kind === "experience" && <OrgLogo work={w} size={88} className="mb-6 -rotate-2" />}
             <p className="text-sm uppercase tracking-[0.25em] text-leaf">{w.kind === "project" ? "passion project" : "experience"}</p>
             <h1 className="mt-3 text-5xl leading-tight text-ink sm:text-7xl">{w.org}</h1>
             <p className="mt-3 text-2xl italic text-ink">{w.role}</p>

@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRef } from "react";
 import type { Work } from "../data/work";
+import OrgLogo from "./OrgLogo";
 import { PaintSwatch } from "./Scenery";
 
 export default function WorkScroller({ items }: { items: Work[] }) {
@@ -28,7 +29,12 @@ export default function WorkScroller({ items }: { items: Work[] }) {
             className="paper group relative flex w-[78vw] max-w-[310px] shrink-0 snap-center flex-col p-4 transition-transform duration-300 hover:-translate-y-2 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-leaf"
             style={{ rotate: `${i % 2 ? 0.8 : -0.6}deg` }}
           >
-            <PaintSwatch color={w.color} seed={i + 1} className="h-20" />
+            <div className="relative">
+              <PaintSwatch color={w.color} seed={i + 1} className="h-24" />
+              <span className="absolute left-4 top-1/2 -translate-y-1/2 -rotate-2 transition-transform duration-300 group-hover:rotate-1">
+                <OrgLogo work={w} size={58} />
+              </span>
+            </div>
             <div className="flex flex-1 flex-col gap-1.5 px-2 pt-4">
               <h3 className="text-2xl leading-tight text-ink">{w.org}</h3>
               <p className="text-base italic text-leaf">{w.role}</p>
