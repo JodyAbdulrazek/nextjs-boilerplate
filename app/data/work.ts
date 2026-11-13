@@ -116,6 +116,7 @@ export const experiences: Work[] = [
   },
   {
     slug: "be-fluent",
+    logo: { src: "/logos/be-fluent.jpg" },
     kind: "experience",
     org: "Be Fluent Language Academy",
     role: "Founder",
