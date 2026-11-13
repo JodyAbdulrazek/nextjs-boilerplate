@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Footer from "./components/Footer";
-import { Cloud, CloudBank, CloudBullet, PaintSwatch, SkyTexture, SparkleField, SunRays } from "./components/Scenery";
+import { Bullet, PaintSwatch, SparkleField } from "./components/Scenery";
 import WorkScroller from "./components/WorkScroller";
 import { experiences, projects } from "./data/work";
 
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <main>
       {/* ---------- nav ---------- */}
-      <nav className="on-sky absolute inset-x-0 top-0 z-20 mx-auto flex max-w-6xl items-center justify-between px-5 py-6 text-white">
+      <nav className="absolute inset-x-0 top-0 z-20 mx-auto flex max-w-6xl items-center justify-between px-5 py-6 text-ink">
         <Link href="/" className="text-lg italic">
           Judy Abdelrazek
         </Link>
@@ -25,44 +25,37 @@ export default function Home() {
       </nav>
 
       {/* ---------- hero ---------- */}
-      <section className="sky relative flex min-h-[100svh] flex-col overflow-hidden">
-        <SunRays x="76%" y="80%" seed={2} reach={85} />
-        <SparkleField count={5} seed={3} colors={["#FFF1C4", "#FFFFFF"]} />
-        <Cloud seed={1} className="drift absolute -left-20 top-16 w-[44vw] max-w-[540px] opacity-95" />
-        <Cloud seed={2} className="drift-slow absolute -right-24 top-24 w-[40vw] max-w-[500px]" />
-        <Cloud seed={3} className="drift absolute right-[6%] top-[44%] hidden sm:block w-[16vw] max-w-[200px] opacity-90" />
-        <Cloud seed={4} className="drift-slow absolute left-[3%] top-[52%] hidden sm:block w-[14vw] max-w-[180px] opacity-85" />
+      <section className="sky relative flex min-h-[92svh] flex-col justify-center overflow-hidden pb-16">
+        <SparkleField count={14} seed={3} colors={["#F4A7B9", "#9CC6EC", "#F3D27A"]} dots={18} dotColor="#FFFFFF" />
 
-        <div className="on-sky relative z-10 mx-auto mt-32 w-full max-w-3xl px-5 text-center text-white sm:mt-40">
-          <p className="text-xl italic text-white/85">hello, I&apos;m</p>
+        <div className="relative z-10 mx-auto mt-24 w-full max-w-3xl px-5 text-center text-ink">
+          <p className="text-xl italic text-ink-soft">hello, I&apos;m</p>
           <h1 className="mt-2 text-6xl leading-none tracking-tight sm:text-8xl">Judy Abdelrazek</h1>
           <p className="mx-auto mt-6 max-w-xl text-xl leading-snug">
             a Computer Science &amp; Business student at Virginia Commonwealth University.
           </p>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-white/85">
+          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
             I&apos;m deeply passionate about the intersection of technology and business, and about using both to build
             thoughtful, user-centered products.
           </p>
-          <p className="mx-auto mt-6 max-w-xl text-lg italic text-[#FFE9B3]">
+          <p className="mx-auto mt-6 max-w-xl text-lg italic text-leaf">
             {INTERESTS.map((t, i) => (
               <span key={t}>
                 <span className="whitespace-nowrap">{t}</span>
-                {i < INTERESTS.length - 1 && <span className="mx-2 not-italic text-white/70">✦</span>}{" "}
+                {i < INTERESTS.length - 1 && <span className="mx-2 not-italic text-blush">♡</span>}{" "}
               </span>
             ))}
           </p>
         </div>
-
-        <CloudBank seed={9} className="relative mt-auto h-[36vh] min-h-[220px]" />
       </section>
 
-      {/* ---------- one continuous stretch of sky for experiences + projects ---------- */}
+      {/* ---------- experiences + projects ---------- */}
       <div className="heavens relative -mt-px overflow-hidden">
-        <SkyTexture seed={5} height={2000} />
+        <SparkleField count={10} seed={5} colors={["#F4A7B9", "#9CC6EC", "#F3D27A"]} />
       <section id="experiences" className="relative scroll-mt-4 pt-16">
         <div className="relative mx-auto max-w-6xl px-5">
-          <h2 className="on-sky text-5xl text-white sm:text-6xl">My Experiences</h2>
-          <p className="on-sky mt-2 max-w-xl text-lg italic text-white/85">drift sideways through the clouds, and click any card to read more</p>
+          <h2 className="text-5xl text-leaf sm:text-6xl">My Experiences</h2>
+          <p className="mt-2 max-w-xl text-lg italic text-ink-soft">scroll sideways, and click any card to read more</p>
         </div>
         <WorkScroller items={experiences} />
       </section>
@@ -70,8 +63,8 @@ export default function Home() {
       {/* ---------- projects ---------- */}
       <section id="projects" className="relative scroll-mt-4 pb-28 pt-12">
         <div className="relative mx-auto max-w-6xl px-5">
-          <h2 className="on-sky text-5xl text-white sm:text-6xl">Personal &amp; Passion Projects</h2>
-          <p className="on-sky mt-2 max-w-xl text-lg italic text-white/85">things I build because I can&apos;t stop thinking about them</p>
+          <h2 className="text-5xl text-leaf sm:text-6xl">Personal &amp; Passion Projects</h2>
+          <p className="mt-2 max-w-xl text-lg italic text-ink-soft">things I build because I can&apos;t stop thinking about them</p>
 
           <div className="mt-12 grid gap-6">
             {projects.map((p, i) => (
@@ -95,7 +88,7 @@ export default function Home() {
                     {p.bullets.map((b) => (
                       <li key={b} className="flex gap-3 text-lg leading-relaxed text-ink-soft">
                         <span className="mt-1">
-                          <CloudBullet color="#9DBDE6" size={20} />
+                          <Bullet color="#9CC6EC" size={18} />
                         </span>
                         {b}
                       </li>

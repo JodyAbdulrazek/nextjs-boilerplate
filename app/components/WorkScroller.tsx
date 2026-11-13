@@ -60,7 +60,7 @@ export default function WorkScroller({ items }: { items: Work[] }) {
             type="button"
             onClick={() => nudge(dir)}
             aria-label={label}
-            className="grid h-11 w-11 place-items-center rounded-full border border-leaf/40 bg-[#fbf5e8]/90 text-xl text-leaf transition hover:-translate-y-0.5 hover:bg-[#fbf5e8]"
+            className="grid h-11 w-11 place-items-center rounded-full border border-leaf/40 bg-white/90 text-xl text-leaf transition hover:-translate-y-0.5 hover:bg-white"
           >
             {glyph}
           </button>

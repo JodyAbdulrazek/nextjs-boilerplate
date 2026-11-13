@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "../../components/Footer";
 import OrgLogo from "../../components/OrgLogo";
-import { Cloud, CloudBank, CloudBullet, PaintSwatch, SkyTexture, SparkleField, SunRays } from "../../components/Scenery";
+import { Bullet, PaintSwatch, SparkleField } from "../../components/Scenery";
 import { allWork, getWork } from "../../data/work";
 
 export function generateStaticParams() {
@@ -20,7 +20,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-const BULLET_TINTS = ["#9DBDE6", "#F2B8C6", "#F3D27A", "#B9A8E2", "#8FCFD6"];
+const BULLET_TINTS = ["#9CC6EC", "#F4A7B9", "#F3D27A", "#B9A8E2", "#8FCFD6"];
 const BIRD_LINES = ["proud of this one ♡", "read this part!", "ooh, look!", "so cool, right?", "this one's my fave"];
 
 /** Underline the standout numbers (40M, 1,000+, 25%…) with a soft painted highlight */
@@ -54,37 +54,33 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   return (
     <main>
       {/* ---------- header ---------- */}
-      <section className="sky relative overflow-hidden">
-        <SunRays x="80%" y="68%" seed={index + 4} reach={80} />
-        <SparkleField count={4} seed={index + 20} colors={["#FFF1C4", "#FFFFFF"]} />
-        <Cloud seed={index + 11} className="drift absolute -left-20 top-16 w-[36vw] max-w-[420px]" />
-        <Cloud seed={index + 12} className="drift-slow absolute -right-20 top-24 w-[32vw] max-w-[380px]" />
+      <section className="sky relative overflow-hidden pb-16">
+        <SparkleField count={10} seed={index + 20} colors={["#F4A7B9", "#9CC6EC", "#F3D27A"]} dots={12} dotColor="#FFFFFF" />
 
-        <div className="on-sky relative z-10 mx-auto max-w-4xl px-5 pt-6 text-white">
+        <div className="relative z-10 mx-auto max-w-4xl px-5 pt-6 text-ink">
           <Link href="/#experiences" className="text-lg italic underline-offset-4 hover:underline">
-            ← back to the sky
+            ← back home
           </Link>
 
           <div className="mt-12 text-center">
             {w.kind === "experience" && <OrgLogo work={w} size={88} className="mb-6 -rotate-2" />}
-            <p className="text-sm uppercase tracking-[0.25em] text-[#FFE9B3]">{w.kind === "project" ? "passion project" : "experience"}</p>
+            <p className="text-sm uppercase tracking-[0.25em] text-leaf">{w.kind === "project" ? "passion project" : "experience"}</p>
             <h1 className="mt-3 text-5xl leading-tight sm:text-7xl">{w.org}</h1>
-            <p className="mt-3 text-2xl italic">{w.role}</p>
-            {meta && <p className="mt-3 text-lg text-white/80">{meta}</p>}
+            <p className="mt-3 text-2xl italic text-leaf">{w.role}</p>
+            {meta && <p className="mt-3 text-lg text-ink-soft">{meta}</p>}
             <div className="mx-auto mt-8 max-w-md">
               <PaintSwatch color={w.color} seed={index + 3} className="h-4" />
             </div>
-            <p className="mx-auto mt-6 max-w-2xl text-xl italic text-white/90">{w.tagline}</p>
+            <p className="mx-auto mt-6 max-w-2xl text-xl italic text-ink-soft">{w.tagline}</p>
           </div>
         </div>
-        <CloudBank seed={index + 60} className="relative mt-20 h-[28vh] min-h-[170px]" />
       </section>
 
       {/* ---------- what I did ---------- */}
       <section className="heavens relative -mt-px overflow-hidden pb-24 pt-12">
-        <SkyTexture seed={index + 30} height={1600} />
+        <SparkleField count={8} seed={index + 30} colors={["#F4A7B9", "#9CC6EC", "#F3D27A"]} />
         <div className="relative mx-auto max-w-4xl px-5">
-          <h2 className="on-sky text-4xl text-white sm:text-5xl">What I did</h2>
+          <h2 className="text-4xl text-leaf sm:text-5xl">What I did</h2>
           <ol className="mt-8 grid gap-6">
             {w.bullets.map((b, i) => (
               <li
@@ -95,7 +91,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
                 style={{ rotate: `${i % 2 ? 0.4 : -0.4}deg` }}
               >
                 <span className="mt-1">
-                  <CloudBullet color={BULLET_TINTS[i % BULLET_TINTS.length]} size={26} />
+                  <Bullet color={BULLET_TINTS[i % BULLET_TINTS.length]} size={22} />
                 </span>
                 <p className="text-lg leading-relaxed text-ink-soft">
                   <Highlighted text={b} />
@@ -104,8 +100,8 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
             ))}
           </ol>
 
-          <h2 className="on-sky mt-16 text-4xl text-white sm:text-5xl">Skills I grew</h2>
-          <p className="on-sky mt-4 text-xl italic text-white/90">{w.skills.join("  ·  ")}</p>
+          <h2 className="mt-16 text-4xl text-leaf sm:text-5xl">Skills I grew</h2>
+          <p className="mt-4 text-xl italic text-ink-soft">{w.skills.join("  ·  ")}</p>
 
           {/* ---------- prev / next ---------- */}
           <div className="mt-16 grid gap-5 sm:grid-cols-2">

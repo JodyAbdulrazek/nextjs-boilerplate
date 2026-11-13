@@ -1,14 +1,13 @@
 @import "tailwindcss";
 
 :root {
-  --sky-top: #24508f;
-  --sky-mid: #3d70b4;
-  --sky-low: #4a7ebf;
-  --cloud: #eef1f6;
+  --sky-top: #d6ecfb;
+  --sky-mid: #e4f3fd;
+  --sky-low: #edf7fe;
   --cream: #fff8ec;
-  --ink: #1f3354;
-  --ink-soft: #4a5873;
-  --leaf: #2a5797;
+  --ink: #24364f;
+  --ink-soft: #55657d;
+  --leaf: #3a6ea8;
   --blush: #f4a7b9;
   --sun: #f7d774;
 }
@@ -17,7 +16,6 @@
   --color-sky-top: var(--sky-top);
   --color-sky-mid: var(--sky-mid);
   --color-sky-low: var(--sky-low);
-  --color-cloud: var(--cloud);
   --color-cream: var(--cream);
   --color-ink: var(--ink);
   --color-ink-soft: var(--ink-soft);
@@ -52,43 +50,36 @@ body::after {
   background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
 }
 
-/* deep summer blue, a little lighter toward the horizon */
+/* soft baby blue, with a whisper of white and blush light */
 .sky {
-  background: linear-gradient(180deg, var(--sky-top) 0%, #3567aa 50%, var(--sky-low) 100%);
+  background:
+    radial-gradient(55% 45% at 18% 12%, rgba(255, 255, 255, 0.75), transparent 70%),
+    radial-gradient(40% 35% at 85% 30%, rgba(252, 226, 236, 0.55), transparent 70%),
+    linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 60%, var(--sky-low) 100%);
 }
 
-/* the long stretch of open sky behind the content */
 .heavens {
   background:
-    radial-gradient(60% 30% at 85% 30%, rgba(160, 196, 236, 0.35), transparent 70%),
-    radial-gradient(50% 25% at 10% 60%, rgba(160, 196, 236, 0.25), transparent 70%),
-    linear-gradient(180deg, var(--sky-low) 0%, var(--sky-mid) 45%, #3565a9 100%);
+    radial-gradient(45% 20% at 90% 15%, rgba(255, 255, 255, 0.7), transparent 70%),
+    radial-gradient(40% 18% at 8% 55%, rgba(252, 226, 236, 0.45), transparent 70%),
+    radial-gradient(45% 20% at 80% 85%, rgba(232, 226, 252, 0.45), transparent 70%),
+    linear-gradient(180deg, var(--sky-low) 0%, var(--sky-mid) 50%, #e3f2fc 100%);
 }
-
-.on-sky {
-  text-shadow: 0 1px 12px rgba(20, 45, 90, 0.35);
-}
-
-@keyframes ray-shimmer {
-  0%, 100% { opacity: 0.85; }
-  50% { opacity: 1; }
-}
-.rays { animation: ray-shimmer 9s ease-in-out infinite; }
 
 /* hand-made, slightly wobbly card */
 /* a slightly worn watercolor postcard */
 .paper {
   background:
     radial-gradient(120% 80% at 10% 0%, rgba(255, 255, 255, 0.7), transparent 60%),
-    radial-gradient(90% 70% at 100% 100%, rgba(236, 216, 186, 0.45), transparent 70%),
-    #fbf5e8;
+    radial-gradient(90% 70% at 100% 100%, rgba(214, 236, 251, 0.45), transparent 70%),
+    #fffdfa;
   border-radius: 4px;
   box-shadow:
     0 1px 0 rgba(60, 50, 30, 0.12),
-    0 14px 28px -14px rgba(15, 35, 80, 0.55);
+    0 14px 28px -16px rgba(60, 100, 150, 0.35);
 }
 
-/* ---------- drifting clouds & twinkles ---------- */
+/* ---------- drifting & twinkles ---------- */
 
 @keyframes drift {
   from { transform: translateX(-4vw); }
@@ -232,6 +223,6 @@ body::after {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .drift, .drift-slow, .sparkle, .bob, .rays { animation: none; }
+  .drift, .drift-slow, .sparkle, .bob { animation: none; }
   html { scroll-behavior: auto; }
 }
