@@ -71,8 +71,8 @@ export default function Home() {
               <Link
                 key={p.slug}
                 href={`/work/${p.slug}`}
-                data-bird-stop
-                data-bird-label={`I love ${p.org}!`}
+                data-pup-stop
+                data-pup-label={`I love ${p.org}!`}
                 className="paper group grid overflow-hidden transition-transform duration-300 hover:-translate-y-1 md:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]"
                 style={{ rotate: "-0.4deg" }}
               >

@@ -107,9 +107,9 @@ body::after {
 }
 .scroller::-webkit-scrollbar { display: none; }
 
-/* ---------- Lulu the bird ---------- */
+/* ---------- Lulu the golden retriever puppy ---------- */
 
-.bird-root {
+.pup-root {
   position: fixed;
   left: 0;
   top: 0;
@@ -120,61 +120,46 @@ body::after {
   will-change: transform;
 }
 
-.bird-svg { overflow: visible; filter: drop-shadow(0 2px 2px rgba(20, 40, 80, 0.3)); }
-.bird-svg * { transform-box: view-box; }
-.bird-svg.is-flying .pose-perch,
-.bird-svg:not(.is-flying) .pose-fly { display: none; }
+.pup-svg { overflow: visible; filter: drop-shadow(0 1px 1.5px rgba(90, 70, 40, 0.25)); }
+.pup-svg * { transform-box: view-box; }
+.pup-svg.is-walking .pose-sit,
+.pup-svg:not(.is-walking) .pose-walk { display: none; }
 
-/* flapping */
-.bird-svg .wing-near { transform-origin: 50px 50px; animation: flap 0.24s ease-in-out infinite alternate; }
-.bird-svg .wing-far { transform-origin: 54px 48px; animation: flap-far 0.24s ease-in-out infinite alternate; }
-.bird-svg.is-flying .bird-all { animation: fly-bob 0.24s ease-in-out infinite alternate; }
-@keyframes flap { from { transform: rotate(14deg); } to { transform: rotate(-72deg); } }
-@keyframes flap-far { from { transform: rotate(8deg); } to { transform: rotate(-58deg); } }
-@keyframes fly-bob { from { transform: translateY(1.5px); } to { transform: translateY(-2.5px); } }
-
-/* perched: breathing, little head tilts and the odd hop */
-.bird-svg .bird-breathe { transform-origin: 52px 84px; animation: breathe 2.6s ease-in-out infinite; }
+/* sitting: gentle breathing, slow panting, a happy wag and the odd head tilt */
+.pup-svg .pup-breathe { animation: breathe 2.8s ease-in-out infinite; }
 @keyframes breathe {
   0%, 100% { transform: scale(1, 1); }
-  50% { transform: scale(1.025, 1.035); }
+  50% { transform: scale(1.012, 1.025); }
 }
-.bird-svg .bird-head { transform-origin: 60px 46px; transition: transform 0.3s; }
-.bird-svg:not(.is-flying):not(.is-petted) .bird-head { animation: head-tilt 6.5s ease-in-out infinite; }
+.pup-svg .pose-sit .pup-tongue { animation: pant 0.42s ease-in-out infinite alternate; }
+@keyframes pant {
+  from { transform: scaleY(0.92); }
+  to { transform: scaleY(1.08); }
+}
+.pup-svg .pup-tail-sit { transform-origin: 78px 89px; animation: wag-sit 0.5s ease-in-out infinite alternate; }
+@keyframes wag-sit {
+  from { transform: rotate(-6deg); }
+  to { transform: rotate(9deg); }
+}
+.pup-svg .pup-head { transition: transform 0.3s; }
+.pup-svg:not(.is-petted) .pose-sit .pup-head { animation: head-tilt 7s ease-in-out infinite; }
 @keyframes head-tilt {
-  0%, 38%, 62%, 100% { transform: rotate(0deg); }
-  44%, 56% { transform: rotate(-13deg); }
+  0%, 40%, 60%, 100% { transform: rotate(0deg); }
+  46%, 54% { transform: rotate(-9deg); }
 }
-.bird-svg:not(.is-flying):not(.is-petted) .bird-hop { animation: hop 7.5s ease-in-out infinite; }
-@keyframes hop {
-  0%, 80%, 90%, 100% { transform: translateY(0); }
-  84% { transform: translateY(-6px); }
-  86% { transform: translateY(-6px); }
-}
+.pup-svg .pup-blush { opacity: 0.3; transition: opacity 0.3s; }
 
-.bird-svg .eyes-happy { opacity: 0; }
-.bird-svg .bird-blush { opacity: 0.45; transition: opacity 0.3s; }
-.bird-svg.is-petted .eyes-open { opacity: 0; }
-.bird-svg.is-petted .eyes-happy { opacity: 1; }
-.bird-svg.is-petted .bird-blush { opacity: 1; }
-.bird-svg.is-petted .bird-head { animation: nuzzle 0.5s ease-in-out infinite alternate; }
-.bird-svg.is-petted .wing-folded { transform-origin: 36px 50px; animation: flutter 0.18s ease-in-out infinite alternate; }
-.bird-svg:not(.is-petted) .eyes-open { transform-origin: 69px 34px; animation: blink 4.2s infinite; }
-
+/* petted: wiggly head, excited panting, wagging like crazy */
+.pup-svg.is-petted .pup-blush { opacity: 0.85; }
+.pup-svg.is-petted .pose-sit .pup-head { animation: nuzzle 0.55s ease-in-out infinite alternate; }
+.pup-svg.is-petted .pose-sit .pup-tongue { animation-duration: 0.22s; }
+.pup-svg.is-petted .pup-tail-sit { animation-duration: 0.18s; }
 @keyframes nuzzle {
-  from { transform: rotate(-9deg); }
+  from { transform: rotate(-8deg); }
   to { transform: rotate(6deg) translateY(1px); }
 }
-@keyframes flutter {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(-14deg); }
-}
-@keyframes blink {
-  0%, 92%, 100% { transform: scaleY(1); }
-  95% { transform: scaleY(0.1); }
-}
 
-.bird-bubble {
+.pup-bubble {
   position: absolute;
   bottom: calc(100% + 6px);
   left: 50%;
@@ -187,11 +172,11 @@ body::after {
   font-size: 0.95rem;
   padding: 0.35rem 0.8rem;
   border-radius: 999px;
-  box-shadow: 0 6px 16px -6px rgba(20, 40, 90, 0.45);
+  box-shadow: 0 6px 16px -6px rgba(40, 70, 110, 0.4);
   pointer-events: none;
   animation: pop 0.25s ease-out;
 }
-.bird-bubble::after {
+.pup-bubble::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -205,7 +190,7 @@ body::after {
   to { transform: translateX(-50%) scale(1); opacity: 1; }
 }
 
-.bird-heart {
+.pup-heart {
   position: absolute;
   left: 60%;
   top: 10%;
@@ -215,7 +200,6 @@ body::after {
   animation: heart-float 1.4s ease-out forwards;
   opacity: 0;
 }
-.bird-heart.is-note { color: #fff4c9; text-shadow: 0 1px 3px rgba(20, 40, 90, 0.5); }
 @keyframes heart-float {
   0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
   20% { opacity: 1; }

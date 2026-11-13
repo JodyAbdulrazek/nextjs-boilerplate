@@ -9,7 +9,7 @@ export default function Footer() {
       <p className="relative mt-3 text-lg text-ink-soft">thank you for stopping by ♡</p>
 
       <p className="relative mt-20 text-sm italic text-ink-soft">
-        © {new Date().getFullYear()} Judy Abdelrazek · made with love (and a little bird)
+        © {new Date().getFullYear()} Judy Abdelrazek · made with love (and a puppy)
       </p>
     </footer>
   );

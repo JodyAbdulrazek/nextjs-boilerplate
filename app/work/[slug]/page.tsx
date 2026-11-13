@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const BULLET_TINTS = ["#9CC6EC", "#F4A7B9", "#F3D27A", "#B9A8E2", "#8FCFD6"];
-const BIRD_LINES = ["proud of this one ♡", "read this part!", "ooh, look!", "so cool, right?", "this one's my fave"];
+const PUP_LINES = ["proud of this one ♡", "read this part!", "ooh, look!", "so cool, right?", "this one's my fave"];
 
 /** Underline the standout numbers (40M, 1,000+, 25%…) with a soft painted highlight */
 function Highlighted({ text }: { text: string }) {
@@ -85,8 +85,8 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
             {w.bullets.map((b, i) => (
               <li
                 key={b}
-                data-bird-stop
-                data-bird-label={BIRD_LINES[i % BIRD_LINES.length]}
+                data-pup-stop
+                data-pup-label={PUP_LINES[i % PUP_LINES.length]}
                 className="paper flex gap-4 p-6 sm:p-8"
                 style={{ rotate: `${i % 2 ? 0.4 : -0.4}deg` }}
               >
