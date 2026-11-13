@@ -12,7 +12,8 @@ export default function JourneyEntry({ work: w, index }: { work: Work; index: nu
   return (
     <article id={`entry-${w.slug}`} data-entry className="grid scroll-mt-28 grid-cols-[64px_minmax(0,1fr)] gap-x-5 sm:gap-x-8">
       <div className="flex justify-center">
-        <OrgLogo work={w} size={50} className={`self-start ${index % 2 ? "rotate-2" : "-rotate-2"}`} />
+        {/* organizations get their logo; personal projects don't have one */}
+        {w.kind !== "project" && <OrgLogo work={w} size={50} className={`self-start ${index % 2 ? "rotate-2" : "-rotate-2"}`} />}
       </div>
 
       <div className="pb-4">
