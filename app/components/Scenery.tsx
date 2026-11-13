@@ -28,17 +28,48 @@ export function PaintDefs() {
           <feTurbulence type="fractalNoise" baseFrequency="0.28" numOctaves="2" seed="5" />
           <feDisplacementMap in="SourceGraphic" scale="3.5" />
         </filter>
-        {/* billowy cauliflower edges for cumulus clouds */}
-        <filter id="cloud-fluff" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="11" />
-          <feDisplacementMap in="SourceGraphic" scale="9" />
-          <feGaussianBlur stdDeviation="0.6" />
-        </filter>
-        {/* soft blurred highlights on cloud tops */}
-        <filter id="cloud-light" x="-30%" y="-30%" width="160%" height="160%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="2" seed="4" />
-          <feDisplacementMap in="SourceGraphic" scale="8" />
-          <feGaussianBlur stdDeviation="2.4" />
+        {/*
+          Realistic cumulus: soften and tear the puff shapes with turbulence, build a height map
+          from them plus fine cauliflower noise, light it from the sun, then add a warm silver
+          lining on the sun-facing edges.
+        */}
+        <filter id="cloud-real" x="-25%" y="-40%" width="150%" height="180%" colorInterpolationFilters="sRGB">
+          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="4" seed="3" result="warp" />
+          <feDisplacementMap in="blur" in2="warp" scale="50" xChannelSelector="R" yChannelSelector="G" result="soft" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="fine" />
+          <feDisplacementMap in="soft" in2="fine" scale="6" xChannelSelector="R" yChannelSelector="B" result="wisp" />
+          <feComponentTransfer in="wisp" result="body">
+            <feFuncA type="table" tableValues="0 0.3 0.72 0.94 1" />
+          </feComponentTransfer>
+          <feGaussianBlur in="wisp" stdDeviation="13" result="dome" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="2" seed="21" result="billow" />
+          <feColorMatrix in="billow" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.7 0 0 0 0" result="bumpsRaw" />
+          <feGaussianBlur in="bumpsRaw" stdDeviation="2.5" result="bumps" />
+          <feComposite in="dome" in2="bumps" operator="arithmetic" k1="0" k2="0.8" k3="0.4" k4="0" result="height" />
+          <feDiffuseLighting in="height" surfaceScale="6" diffuseConstant="1.05" lightingColor="#FFF9EE" result="light">
+            <feDistantLight azimuth="-65" elevation="48" />
+          </feDiffuseLighting>
+          {/* clouds are translucent: even the shaded side glows, so lift the darks */}
+          <feComponentTransfer in="light" result="lightSoft">
+            <feFuncR type="linear" slope="0.6" intercept="0.46" />
+            <feFuncG type="linear" slope="0.6" intercept="0.46" />
+            <feFuncB type="linear" slope="0.55" intercept="0.5" />
+          </feComponentTransfer>
+          <feComposite in="lightSoft" in2="body" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="direct" />
+          {/* the shadows pick up the blue of the sky around them */}
+          <feFlood floodColor="#9CB8E4" />
+          <feComposite in2="body" operator="in" result="skyfill" />
+          <feComposite in="direct" in2="skyfill" operator="arithmetic" k1="0" k2="0.92" k3="0.22" k4="0" result="lit" />
+          <feOffset in="body" dx="-4" dy="6" result="shifted" />
+          <feComposite in="body" in2="shifted" operator="out" result="edge" />
+          <feGaussianBlur in="edge" stdDeviation="2.5" result="edgeSoft" />
+          <feFlood floodColor="#FFF6DD" floodOpacity="0.8" />
+          <feComposite in2="edgeSoft" operator="in" result="lining" />
+          <feMerge>
+            <feMergeNode in="lit" />
+            <feMergeNode in="lining" />
+          </feMerge>
         </filter>
         {/* small bristly edges */}
         <filter id="paint-soft" x="-20%" y="-20%" width="140%" height="140%">
@@ -79,67 +110,36 @@ const mix = (a: string, b: string, t: number) => {
   return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(",")})`;
 };
 
-const CLOUD_PALETTES = {
-  // white tops, blue-grey bellies, a golden rim where the sun catches them
-  sunlit: { shadow: "#6C82AC", low: "#A3B2CE", high: "#EEF1F6", light: "#FFFFFF", rim: "#FFE7B0" },
-  // backlit by the sun: darker bodies, glowing edges
-  glow: { shadow: "#5E74A0", low: "#8D9EC0", high: "#D9DFEA", light: "#FFF6E2", rim: "#FFE09A" },
-};
-type Palette = keyof typeof CLOUD_PALETTES;
+const CLOUD_LOW = "#97A7C5"; // shadowed belly
+const CLOUD_HIGH = "#FFFFFF"; // sunlit tops
 
-function Puffs({ puffs, palette = "sunlit", rim = 0.8 }: { puffs: Puff[]; palette?: Palette; rim?: number }) {
-  const c = CLOUD_PALETTES[palette];
+/**
+ * A cloud's puffs, drawn as soft-edged blobs (a faint outer ring plus a solid core) so each
+ * billow becomes a little dome in the lighting filter. Lower puffs are bluer.
+ */
+function Puffs({ puffs }: { puffs: Puff[] }) {
   return (
-    <g>
-      <g filter="url(#cloud-fluff)">
-        {/* blue-grey shadow peeking out underneath */}
-        <g fill={c.shadow}>
-          {puffs.map((p, i) => (
-            <circle key={i} cx={n(p.x - p.rad * 0.1)} cy={n(p.y + p.rad * 0.2)} r={n(p.rad)} />
-          ))}
-        </g>
-        {/* golden silver lining peeking out on the sunny side */}
-        <g fill={c.rim} opacity={rim}>
-          {puffs
-            .filter((p) => p.lit > 0.25)
-            .map((p, i) => (
-              <circle key={i} cx={n(p.x + p.rad * 0.1)} cy={n(p.y - p.rad * 0.1)} r={n(p.rad * 0.97)} />
-            ))}
-        </g>
-        {/* the body of each puff: bluer low down, whiter up top */}
-        {puffs.map((p, i) => (
-          <circle key={i} cx={n(p.x)} cy={n(p.y)} r={n(p.rad * 0.94)} fill={mix(c.low, c.high, Math.min(1, p.lit * 1.3))} />
-        ))}
-      </g>
-      {/* soft sunlit tops */}
-      <g fill={c.light} filter="url(#cloud-light)">
-        {puffs
-          .filter((p) => p.lit > 0.2)
-          .map((p, i) => (
-            <circle key={i} cx={n(p.x + p.rad * 0.15)} cy={n(p.y - p.rad * 0.22)} r={n(p.rad * 0.6)} opacity={n(0.35 + p.lit * 0.55)} />
-          ))}
-      </g>
+    <g filter="url(#cloud-real)">
+      {puffs.map((p, i) => {
+        const fill = mix(CLOUD_LOW, CLOUD_HIGH, Math.min(1, 0.15 + p.lit * 1.2));
+        return (
+          <g key={i} fill={fill}>
+            <circle cx={n(p.x)} cy={n(p.y)} r={n(p.rad)} opacity="0.5" />
+            <circle cx={n(p.x + p.rad * 0.05)} cy={n(p.y - p.rad * 0.08)} r={n(p.rad * 0.72)} />
+          </g>
+        );
+      })}
     </g>
   );
 }
 
 /** one floating cumulus cloud */
-export function Cloud({
-  className = "",
-  style,
-  palette = "sunlit",
-  seed = 1,
-}: {
-  className?: string;
-  style?: CSSProperties;
-  palette?: Palette;
-  seed?: number;
-}) {
+export function Cloud({ className = "", style, seed = 1 }: { className?: string; style?: CSSProperties; seed?: number }) {
   const r = rng(seed * 97);
-  const puffs = cumulus(r, 160, 132, 250, 70 + r() * 25, 26);
+  const puffs = cumulus(r, 480, 400, 760, 210 + r() * 80, 30);
   return (
-    <svg viewBox="0 0 320 160" className={`pointer-events-none select-none overflow-visible ${className}`} style={style} aria-hidden>
-      <Puffs puffs={puffs} palette={palette} />
+    <svg viewBox="0 0 960 480" className={`pointer-events-none select-none overflow-visible ${className}`} style={style} aria-hidden>
+      <Puffs puffs={puffs} />
     </svg>
   );
 }
@@ -148,14 +148,10 @@ export function Cloud({
 export function CloudBank({
   className = "",
   seed = 42,
-  palette = "sunlit",
-  rim = 0.8,
   filled = false,
 }: {
   className?: string;
   seed?: number;
-  palette?: Palette;
-  rim?: number;
   /** true: clouds pile all the way to the bottom edge; false: they float, with sky showing beneath */
   filled?: boolean;
 }) {
@@ -180,7 +176,7 @@ export function CloudBank({
       {clouds.map((row, i) => (
         <g key={i} opacity={i === 0 ? 0.75 : 1}>
           {row.map((puffs, j) => (
-            <Puffs key={j} puffs={puffs} palette={palette} rim={rim} />
+            <Puffs key={j} puffs={puffs} />
           ))}
         </g>
       ))}

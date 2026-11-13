@@ -13,7 +13,7 @@ export default function Footer() {
       <p className="on-sky relative mt-3 text-lg text-white/90">thank you for floating through my little sky</p>
 
       <div className="relative mt-10">
-        <CloudBank seed={77} rim={1} filled className="h-[34vh] min-h-[230px]" />
+        <CloudBank seed={77} filled className="h-[34vh] min-h-[230px]" />
         <p className="absolute inset-x-0 bottom-4 text-sm italic text-ink [text-shadow:0_0_8px_#fff,0_0_3px_#fff]">
           © {new Date().getFullYear()} Judy Abdelrazek · painted with love (and a little bird)
         </p>
