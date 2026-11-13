@@ -23,9 +23,15 @@ const CHAT: TechIcon = {
   color: "#3A6EA8",
   stroke: true,
 };
-/** VR headset, for immersive technology */
-const HEADSET: TechIcon = {
-  path: "M4 7.5h16a1.5 1.5 0 0 1 1.5 1.5v6A1.5 1.5 0 0 1 20 16.5h-4.2l-2.3-2.6a2 2 0 0 0-3 0l-2.3 2.6H4A1.5 1.5 0 0 1 2.5 15V9A1.5 1.5 0 0 1 4 7.5Z",
+/** Clipboard checklist, for project management */
+const CHECKLIST: TechIcon = {
+  path: "M8.5 4.5H6A1.5 1.5 0 0 0 4.5 6v14A1.5 1.5 0 0 0 6 21.5h12a1.5 1.5 0 0 0 1.5-1.5V6A1.5 1.5 0 0 0 18 4.5h-2.5M9 3h6v3H9ZM8 11.5l1.5 1.5L12 10.5M14 12h2.5M8 16.5l1.5 1.5L12 15.5M14 17h2.5",
+  color: "#3A6EA8",
+  stroke: true,
+};
+/** Connected nodes, for program management (many projects working together) */
+const NETWORK: TechIcon = {
+  path: "M12 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM5 15.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM19 15.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM12 8.5v3.5M12 12l-5.3 4M12 12l5.3 4",
   color: "#D8668A",
   stroke: true,
 };
@@ -42,5 +48,6 @@ export const TECH_ICONS: Record<string, TechIcon> = {
   "Git/GitHub": GITHUB,
   "Generative AI": SPARKLE,
   NLP: CHAT,
-  "Immersive technology": HEADSET,
+  "Project management": CHECKLIST,
+  "Program management": NETWORK,
 };
