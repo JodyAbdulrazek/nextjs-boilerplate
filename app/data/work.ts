@@ -148,6 +148,8 @@ export const experiences: Work[] = [
     ],
     tech: ["Immersive technology"],
     skills: [
+      "Program management",
+      "Project management",
       "Market research",
       "Competitive analysis",
       "User research",
