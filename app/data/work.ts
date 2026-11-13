@@ -207,11 +207,14 @@ export const projects: Work[] = [
       },
       {
         heading: "What I worked on",
-        items: ["Designed, tested, and refined application features to create a more personalized and efficient task management experience."],
+        items: [
+          "Designed, tested, and refined application features to create a more personalized and efficient task management experience.",
+          "Delivered product features within an Agile development environment by collaborating with teammates through Git/GitHub and iterating on functionality throughout development.",
+        ],
       },
     ],
-    tech: ["TypeScript", "Python", "Claude API"],
-    skills: ["AI task prioritization", "Smart scheduling", "Automated reminders", "Designing, testing & refining features"],
+    tech: ["TypeScript", "Python", "Claude API", "Git/GitHub"],
+    skills: ["AI task prioritization", "Smart scheduling", "Automated reminders", "Designing, testing & refining features", "Agile development", "Team collaboration"],
   },
   {
     slug: "therapy-cafe",
