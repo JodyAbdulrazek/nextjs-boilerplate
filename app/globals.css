@@ -5,8 +5,8 @@
   --sky-mid: #e4f3fd;
   --sky-low: #edf7fe;
   --cream: #fff8ec;
-  --ink: #24364f;
-  --ink-soft: #55657d;
+  --ink: #2e4260;
+  --ink-soft: #5d6c83;
   --leaf: #3a6ea8;
   --blush: #f4a7b9;
   --sun: #f7d774;
@@ -29,6 +29,16 @@
 
 html {
   scroll-behavior: smooth;
+  /* a slightly smaller base size, so all text scales down together */
+  font-size: 93.75%;
+}
+
+/* Times New Roman has no lighter weight, so headings are thinned a touch by shaving
+   their edges with a stroke in the background color */
+h1,
+h2,
+h3 {
+  -webkit-text-stroke: 0.6px #e3f1fc;
 }
 
 body {
