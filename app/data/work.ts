@@ -20,8 +20,6 @@ export type Work = {
   logo?: { src: string; wide?: boolean };
   /** One-line summary for cards */
   tagline: string;
-  /** The problem or question at the heart of the work, drawn from the bullets */
-  question: string;
   story: StorySection[];
   /** Only technologies named in the source content */
   tech: string[];
@@ -39,7 +37,6 @@ export const experiences: Work[] = [
     dates: "August 2026 – Present",
     color: "#F6B8C8",
     tagline: "Understanding why users disengage on a 40M-user platform",
-    question: "Why do users disengage from BeReal, and where could the experience improve?",
     story: [
       {
         heading: "What I explored",
@@ -68,7 +65,6 @@ export const experiences: Work[] = [
     dates: "August 2026 – Present",
     color: "#A9D3F5",
     tagline: "Turning ideas into working AI applications with Claude Code",
-    question: "How do you turn an idea into a working AI application, from start to finish?",
     story: [
       {
         heading: "What I worked on",
@@ -95,7 +91,6 @@ export const experiences: Work[] = [
     dates: "August 2026 – Present",
     color: "#C9B8F0",
     tagline: "Helping robots understand instructions and interact with people",
-    question: "How could generative AI help robots better understand instructions, make decisions, and interact with people?",
     story: [
       {
         heading: "What I explored",
@@ -122,7 +117,6 @@ export const experiences: Work[] = [
     dates: "August 2021 – August 2023",
     color: "#F7D774",
     tagline: "Founded and grew a language platform for 1,000+ learners",
-    question: "How could language learning become more engaging and accessible?",
     story: [
       {
         heading: "What I explored",
@@ -167,7 +161,6 @@ export const experiences: Work[] = [
     dates: "June 2025 – July 2025",
     color: "#F9C59B",
     tagline: "AI-powered, personalized mental health support",
-    question: "How can AI address the need for more personalized wellness support?",
     story: [
       {
         heading: "What I built",
@@ -196,7 +189,6 @@ export const projects: Work[] = [
     role: "AI Productivity Platform",
     color: "#9FDBB4",
     tagline: "Helping people organize tasks, manage deadlines, and stay productive",
-    question: "How can AI help people organize tasks, manage deadlines, and improve productivity?",
     story: [
       {
         heading: "What I built",
@@ -223,7 +215,6 @@ export const projects: Work[] = [
     role: "AI Mental Health Support Platform",
     color: "#E8C9A8",
     tagline: "Personalized conversations, wellness recommendations, and mood tracking",
-    question: "How can AI provide more personalized mental health support?",
     story: [
       {
         heading: "What I built",
@@ -252,7 +243,6 @@ export const leadership: Work[] = [
     dates: "March 2025 – August 2025",
     color: "#F4A7B9",
     tagline: "15+ hands-on workshops introducing students to generative AI",
-    question: "How can students learn to use generative AI in practical ways in their work?",
     story: [
       {
         heading: "What I worked on",

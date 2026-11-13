@@ -68,7 +68,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const prev = allWork[(index - 1 + allWork.length) % allWork.length];
   const meta = [w.dates, w.location].filter(Boolean).join("  ·  ");
   const backTo = w.kind === "project" ? "projects" : w.kind === "leadership" ? "leadership" : "experiences";
-  const chapters = w.story.length + 2; // the question + story sections + skills
+  const chapters = w.story.length + 1; // story sections + skills
   let pupLine = 0;
 
   return (
@@ -104,15 +104,8 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
             {/* the dotted thread that ties the chapters together */}
             <span aria-hidden className="absolute bottom-6 left-[19px] top-6 border-l-2 border-dashed border-leaf/25" />
 
-            <Chapter n={1} of={chapters} title="The question">
-              <blockquote className="paper relative p-7 sm:p-9" style={{ rotate: "-0.3deg" }}>
-                <span aria-hidden className="absolute -top-3 left-5 text-6xl leading-none text-blush">&ldquo;</span>
-                <p className="text-2xl italic leading-snug text-ink sm:text-3xl">{w.question}</p>
-              </blockquote>
-            </Chapter>
-
             {w.story.map((section, si) => (
-              <Chapter key={section.heading} n={si + 2} of={chapters} title={section.heading}>
+              <Chapter key={section.heading} n={si + 1} of={chapters} title={section.heading}>
                 <ul className="grid gap-5">
                   {section.items.map((item, i) => {
                     const line = PUP_LINES[pupLine++ % PUP_LINES.length];
