@@ -1,26 +1,204 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f9a8d4;
-  --foreground: #171717;
+  --sky-top: #5f9fe6;
+  --sky-mid: #a9d3f5;
+  --sky-low: #fde4ec;
+  --meadow: #8ccb5e;
+  --meadow-deep: #5aa852;
+  --cream: #fff8ec;
+  --ink: #2c3e3a;
+  --ink-soft: #55665f;
+  --leaf: #1f6b5c;
+  --blush: #f4a7b9;
+  --sun: #f7d774;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-sky-top: var(--sky-top);
+  --color-sky-mid: var(--sky-mid);
+  --color-sky-low: var(--sky-low);
+  --color-meadow: var(--meadow);
+  --color-meadow-deep: var(--meadow-deep);
+  --color-cream: var(--cream);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-leaf: var(--leaf);
+  --color-blush: var(--blush);
+  --color-sun: var(--sun);
+  --font-sans: var(--font-nunito);
+  --font-display: var(--font-fredoka);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #831843;
-    --foreground: #ededed;
-  }
+html {
+  scroll-behavior: smooth;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--sky-mid);
+  color: var(--ink);
+  font-family: var(--font-nunito), ui-rounded, "Segoe UI", sans-serif;
+}
+
+/* a whisper of paper grain over everything, for the painted feel */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 60;
+  opacity: 0.07;
+  mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+}
+
+.sky {
+  background: linear-gradient(180deg, var(--sky-top) 0%, var(--sky-mid) 55%, var(--sky-low) 100%);
+}
+
+.meadow {
+  background: linear-gradient(180deg, #6db55a 0%, #7fc260 30%, #93cf6a 100%);
+}
+
+/* hand-made, slightly wobbly card */
+.paper {
+  background: var(--cream);
+  border-radius: 28px 34px 30px 26px / 30px 26px 34px 28px;
+  box-shadow:
+    0 2px 0 rgba(44, 62, 58, 0.08),
+    0 14px 30px -12px rgba(31, 80, 60, 0.35);
+}
+
+/* ---------- drifting clouds & twinkles ---------- */
+
+@keyframes drift {
+  from { transform: translateX(-4vw); }
+  to { transform: translateX(4vw); }
+}
+.drift { animation: drift 18s ease-in-out infinite alternate; }
+.drift-slow { animation: drift 28s ease-in-out infinite alternate-reverse; }
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.25; transform: scale(0.7) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.1) rotate(20deg); }
+}
+.sparkle { animation: twinkle 3s ease-in-out infinite; }
+
+@keyframes bob {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+.bob { animation: bob 3.5s ease-in-out infinite; }
+
+/* ---------- horizontal scroller ---------- */
+
+.scroller {
+  scrollbar-width: none;
+}
+.scroller::-webkit-scrollbar { display: none; }
+
+/* ---------- the cat ---------- */
+
+.cat-root {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 50;
+  cursor: grab;
+  touch-action: manipulation;
+  transition: opacity 0.6s;
+  will-change: transform;
+}
+
+.cat-svg { overflow: visible; }
+.cat-svg .cat-leg { transform-box: fill-box; transform-origin: 50% 10%; }
+.cat-svg .cat-tail { transform-box: view-box; transform-origin: 28px 66px; animation: tail-sway 2.4s ease-in-out infinite; }
+.cat-svg .cat-head { transform-box: view-box; transform-origin: 88px 60px; transition: transform 0.3s; }
+.cat-svg .eyes-happy { opacity: 0; }
+.cat-svg .cat-blush { opacity: 0.55; transition: opacity 0.3s; }
+
+.cat-svg.is-walking .leg-a { animation: leg-swing 0.42s ease-in-out infinite; }
+.cat-svg.is-walking .leg-b { animation: leg-swing 0.42s ease-in-out infinite reverse; }
+.cat-svg.is-walking .cat-body { animation: body-bob 0.21s ease-in-out infinite alternate; }
+.cat-svg.is-walking .cat-tail { animation-duration: 0.9s; }
+
+.cat-svg.is-petted .eyes-open { opacity: 0; }
+.cat-svg.is-petted .eyes-happy { opacity: 1; }
+.cat-svg.is-petted .cat-blush { opacity: 1; }
+.cat-svg.is-petted .cat-head { animation: nuzzle 0.6s ease-in-out infinite alternate; }
+.cat-svg.is-petted .cat-tail { animation-duration: 0.7s; }
+
+/* blink every few seconds when not petted */
+.cat-svg:not(.is-petted) .eyes-open { transform-box: fill-box; transform-origin: center; animation: blink 4.5s infinite; }
+
+@keyframes leg-swing {
+  0%, 100% { transform: rotate(16deg); }
+  50% { transform: rotate(-16deg); }
+}
+@keyframes body-bob {
+  from { transform: translateY(0); }
+  to { transform: translateY(-2px); }
+}
+@keyframes tail-sway {
+  0%, 100% { transform: rotate(-6deg); }
+  50% { transform: rotate(10deg); }
+}
+@keyframes nuzzle {
+  from { transform: rotate(-7deg); }
+  to { transform: rotate(5deg) translateY(1px); }
+}
+@keyframes blink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+.cat-bubble {
+  position: absolute;
+  bottom: calc(100% + 6px);
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--font-fredoka), ui-rounded, sans-serif;
+  font-size: 0.85rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 999px;
+  box-shadow: 0 6px 16px -6px rgba(31, 80, 60, 0.4);
+  pointer-events: none;
+  animation: pop 0.25s ease-out;
+}
+.cat-bubble::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -6px;
+  border: 6px solid transparent;
+  border-top-color: #fff;
+}
+@keyframes pop {
+  from { transform: translateX(-50%) scale(0.6); opacity: 0; }
+  to { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+.cat-heart {
+  position: absolute;
+  left: 60%;
+  top: 10%;
+  color: #f27a9a;
+  font-size: 1.1rem;
+  pointer-events: none;
+  animation: heart-float 1.4s ease-out forwards;
+  opacity: 0;
+}
+@keyframes heart-float {
+  0% { opacity: 0; transform: translate(0, 0) scale(0.5); }
+  20% { opacity: 1; }
+  100% { opacity: 0; transform: translate(var(--dx), -70px) scale(1.2); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drift, .drift-slow, .sparkle, .bob { animation: none; }
+  html { scroll-behavior: auto; }
 }
