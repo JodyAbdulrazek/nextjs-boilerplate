@@ -6,12 +6,13 @@ import { useEffect, useRef, useState } from "react";
  * Lulu the golden retriever puppy 🐾
  * - trots around the bottom of the screen and sits down now and then
  * - hover (or tap) to pet her: she pants happily, wags and makes hearts
- * - after a pet she gives you a tour, walking to each card marked with
- *   data-pup-stop that's on screen, sitting on it and saying its data-pup-label
+ * - after a pet she trots to the next entry on the journey ([data-entry]) and
+ *   sits beside its title; the journey arrows send her along too (pup:goto)
+ * - on pages without a journey she tours the on-screen [data-pup-stop] items
  */
 
 type Mode = "wander" | "petted" | "tour";
-type Stop = { el: HTMLElement; label: string };
+type Stop = { el: HTMLElement; label: string; waitUntil?: number };
 type Target = { x: number; y: number } | Stop;
 type Heart = { id: number; dx: number; delay: number; paw: boolean };
 
@@ -94,6 +95,11 @@ function isStop(t: Target): t is Stop {
   return "el" in t;
 }
 
+/** headings get a spot beside the text; everything else, its top edge */
+function sitsBeside(el: HTMLElement) {
+  return el.matches("h2, h3");
+}
+
 function onScreen(el: HTMLElement) {
   const r = el.getBoundingClientRect();
   return r.width > 0 && r.right > 60 && r.left < window.innerWidth - 60 && r.top > 70 && r.top < window.innerHeight - 40;
@@ -141,6 +147,7 @@ export default function Puppy() {
     let phase = 0;
     let amp = 0;
     let lastMoving = -1e9;
+    let guiding = false;
 
     /** pose legs, body, head, ear, tongue and tail for this point in the stride */
     const animateWalk = (now: number, dt: number, moved: number) => {
@@ -206,7 +213,14 @@ export default function Puppy() {
       if (!isStop(t)) return t;
       if (!t.el.isConnected || !onScreen(t.el)) return null;
       const r = t.el.getBoundingClientRect();
-      return { x: r.left + r.width * 0.72, y: r.top + 8 }; // sit on the card's top edge
+      if (sitsBeside(t.el)) {
+        // sit just after the title, on its baseline (or under it if there's no room)
+        const room = r.right + W * 0.65 < window.innerWidth - 8;
+        return room
+          ? { x: r.right + W * 0.6, y: r.bottom + 2 }
+          : { x: Math.min(r.left + W * 0.6, window.innerWidth - W / 2), y: r.bottom + H * 0.9 };
+      }
+      return { x: r.left + r.width * 0.72, y: r.top + 8 }; // sit on the item's top edge
     };
 
     const randomSpot = () => ({
@@ -221,12 +235,52 @@ export default function Puppy() {
           if (onScreen(s.el)) return s;
         }
         setMode("wander");
-        say("that was fun! pet me again ♡", 3200);
+        if (!guiding) say("that was fun! pet me again ♡", 3200);
+        guiding = false;
       }
       return randomSpot();
     };
 
+    /** trot over to an element (waiting a moment if the page is still scrolling to it) */
+    const guideTo = (el: HTMLElement, label: string, hello?: string) => {
+      const perch = el.matches("[data-pup-stop]") ? el : el.querySelector<HTMLElement>("[data-pup-stop]") ?? el;
+      queue = [];
+      guiding = true;
+      resting = null;
+      restUntil = 0;
+      target = { el: perch, label, waitUntil: performance.now() + 2500 };
+      setMode("tour");
+      if (hello) say(hello, 1500);
+    };
+
+    /** the journey arrows ask her to come along */
+    const onGoto = (e: Event) => {
+      const id = (e as CustomEvent<{ id: string }>).detail?.id;
+      const el = id ? document.getElementById(id) : null;
+      if (!el || id === "top") return;
+      const perch = el.querySelector<HTMLElement>("[data-pup-stop]") ?? el;
+      guideTo(el, perch.dataset.pupLabel || "ooh, look!");
+    };
+    window.addEventListener("pup:goto", onGoto);
+
     startTourRef.current = () => {
+      // on the journey: head to the next entry that hasn't reached the top yet
+      const entries = Array.from(document.querySelectorAll<HTMLElement>("[data-entry]"));
+      if (entries.length) {
+        const next = entries.find((el) => el.getBoundingClientRect().top > 150); // the one after what you're reading
+        if (!next) {
+          setMode("wander");
+          say("that's the whole journey! thanks for visiting ♡", 3200);
+          return;
+        }
+        const r = next.getBoundingClientRect();
+        if (r.top > window.innerHeight * 0.6) next.scrollIntoView({ behavior: "smooth", block: "start" });
+        const perch = next.querySelector<HTMLElement>("[data-pup-stop]") ?? next;
+        guideTo(next, perch.dataset.pupLabel || "ooh, look!", "follow me! 🐾");
+        return;
+      }
+
+      guiding = false;
       queue = Array.from(document.querySelectorAll<HTMLElement>("[data-pup-stop]"))
         .filter(onScreen)
         .map((el) => ({ el, label: el.dataset.pupLabel || "ooh, look!" }));
@@ -272,6 +326,12 @@ export default function Puppy() {
       if (!target) target = nextTarget();
       const p = resolve(target);
       if (!p) {
+        // the page may still be gliding toward where she's headed
+        if (isStop(target) && target.waitUntil && now < target.waitUntil) {
+          speed = 0;
+          setWalk(false);
+          return 0;
+        }
         target = null;
         return 0;
       }
@@ -279,7 +339,7 @@ export default function Puppy() {
       const dx = p.x - pos.x;
       const dy = p.y - pos.y;
       const dist = Math.hypot(dx, dy);
-      const maxSpeed = SPEED * (modeRef.current === "tour" ? 1.5 : 1);
+      const maxSpeed = SPEED * (guiding ? 3.4 : modeRef.current === "tour" ? 1.5 : 1); // trots quickly when guiding
       const desired = Math.min(maxSpeed, Math.sqrt(2 * DECEL * dist) + 8);
       speed += (desired - speed) * Math.min(1, dt * ACCEL);
       const stepLen = speed * dt;
@@ -325,6 +385,7 @@ export default function Puppy() {
 
     return () => {
       cancelAnimationFrame(raf);
+      window.removeEventListener("pup:goto", onGoto);
       clearTimeout(hello);
       clearTimeout(bubbleTimer);
     };

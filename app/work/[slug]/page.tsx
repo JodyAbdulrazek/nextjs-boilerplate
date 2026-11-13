@@ -106,7 +106,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
 
             {w.story.map((section, si) => (
               <Chapter key={section.heading} n={si + 1} of={chapters} title={section.heading}>
-                <ul className="grid gap-5">
+                <ul className="grid gap-6">
                   {section.items.map((item, i) => {
                     const line = PUP_LINES[pupLine++ % PUP_LINES.length];
                     return (
@@ -114,8 +114,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
                         key={item}
                         data-pup-stop
                         data-pup-label={line}
-                        className="paper flex gap-4 p-6 sm:p-7"
-                        style={{ rotate: `${(si + i) % 2 ? 0.35 : -0.35}deg` }}
+                        className="flex gap-4"
                       >
                         <span className="mt-1">
                           <Bullet color={BULLET_TINTS[(si + i) % BULLET_TINTS.length]} size={22} />
@@ -131,7 +130,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
             ))}
 
             <Chapter n={chapters} of={chapters} title={w.tech.length ? "Skills & technologies" : "Skills I grew"}>
-              <div className="paper p-7 sm:p-8" style={{ rotate: "0.3deg" }}>
+              <div>
                 {w.tech.length > 0 && (
                   <>
                     <p className="text-sm uppercase tracking-[0.2em] text-leaf">technologies</p>
@@ -145,14 +144,14 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
           </ol>
 
           {/* ---------- prev / next ---------- */}
-          <div className="mt-20 grid gap-5 sm:grid-cols-2">
-            <Link href={`/work/${prev.slug}`} className="paper group p-6 transition hover:-translate-y-1" style={{ rotate: "-0.5deg" }}>
+          <div className="mt-20 flex flex-wrap items-end justify-between gap-6 border-t border-dashed border-leaf/25 pt-8">
+            <Link href={`/work/${prev.slug}`} className="group">
               <span className="text-sm uppercase tracking-[0.2em] text-leaf">← previous</span>
-              <p className="mt-1 text-2xl text-ink">{prev.org}</p>
+              <p className="mt-1 text-2xl text-ink underline decoration-transparent underline-offset-4 transition group-hover:decoration-blush">{prev.org}</p>
             </Link>
-            <Link href={`/work/${next.slug}`} className="paper group p-6 text-right transition hover:-translate-y-1" style={{ rotate: "0.5deg" }}>
+            <Link href={`/work/${next.slug}`} className="group ml-auto text-right">
               <span className="text-sm uppercase tracking-[0.2em] text-leaf">next adventure →</span>
-              <p className="mt-1 text-2xl text-ink">{next.org}</p>
+              <p className="mt-1 text-2xl text-ink underline decoration-transparent underline-offset-4 transition group-hover:decoration-blush">{next.org}</p>
             </Link>
           </div>
         </div>

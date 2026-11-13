@@ -21,6 +21,11 @@ export type Work = {
   /** One-line summary for cards */
   tagline: string;
   story: StorySection[];
+  /**
+   * Order of the bullets as originally written, as indexes into the story's items
+   * read top to bottom. Omit when the story already follows that order.
+   */
+  order?: number[];
   /** Only technologies named in the source content */
   tech: string[];
   skills: string[];
@@ -65,6 +70,7 @@ export const experiences: Work[] = [
     dates: "August 2026 – Present",
     color: "#A9D3F5",
     tagline: "Turning ideas into working AI applications with Claude Code",
+    order: [1, 0, 2],
     story: [
       {
         heading: "What I worked on",
@@ -117,6 +123,7 @@ export const experiences: Work[] = [
     dates: "August 2021 – August 2023",
     color: "#F7D774",
     tagline: "Founded and grew a language platform for 1,000+ learners",
+    order: [3, 0, 1, 2],
     story: [
       {
         heading: "What I explored",
@@ -267,6 +274,12 @@ export const KIND_LABEL: Record<Work["kind"], string> = {
   project: "passion project",
   leadership: "leadership",
 };
+
+/** Every bullet for an entry, in the order it was originally written */
+export function bulletsOf(w: Work): string[] {
+  const flat = w.story.flatMap((s) => s.items);
+  return w.order ? w.order.map((i) => flat[i]) : flat;
+}
 
 export function getWork(slug: string): Work | undefined {
   return allWork.find((w) => w.slug === slug);
