@@ -118,8 +118,15 @@ body::after {
 
 .cat-svg { overflow: visible; }
 .cat-svg .cat-leg { transform-box: fill-box; transform-origin: 50% 10%; }
-.cat-svg .cat-tail { transform-box: view-box; transform-origin: 28px 66px; animation: tail-sway 2.4s ease-in-out infinite; }
-.cat-svg .cat-head { transform-box: view-box; transform-origin: 88px 60px; transition: transform 0.3s; }
+.cat-svg .cat-tail { transform-box: view-box; animation: tail-sway 2.4s ease-in-out infinite; }
+.cat-svg.is-walking .pose-sit,
+.cat-svg:not(.is-walking) .pose-walk { display: none; }
+.cat-svg .cat-breathe { transform-box: view-box; animation: breathe 3.2s ease-in-out infinite; }
+@keyframes breathe {
+  0%, 100% { transform: scale(1, 1); }
+  50% { transform: scale(1.015, 1.03); }
+}
+.cat-svg .cat-head { transform-box: view-box; transition: transform 0.3s; }
 .cat-svg .eyes-happy { opacity: 0; }
 .cat-svg .cat-blush { opacity: 0.55; transition: opacity 0.3s; }
 
