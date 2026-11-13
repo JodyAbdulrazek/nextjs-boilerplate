@@ -30,7 +30,7 @@ export default function Home() {
 
         <div className="relative z-10 mx-auto mt-24 w-full max-w-3xl px-5 text-center text-ink">
           <p className="text-xl italic text-ink-soft">hello, I&apos;m</p>
-          <h1 className="mt-2 text-6xl leading-none tracking-tight sm:text-8xl">Judy Abdelrazek</h1>
+          <h1 className="name-thin mt-2 text-6xl leading-none sm:text-8xl">Judy Abdelrazek</h1>
           <p className="mx-auto mt-6 max-w-xl text-xl leading-snug">
             a Computer Science &amp; Business student at Virginia Commonwealth University.
           </p>
