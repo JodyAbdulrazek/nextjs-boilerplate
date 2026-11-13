@@ -96,23 +96,36 @@ export const experiences: Work[] = [
     location: "Richmond, VA",
     dates: "August 2026 – Present",
     color: "#C9B8F0",
-    tagline: "Helping robots understand instructions and interact with people",
+    tagline: "Building a responsible AI academic assistant for VCU students",
     story: [
       {
-        heading: "What I explored",
-        items: ["Explored how generative AI could help robots better understand instructions, make decisions, and interact with people."],
+        heading: "What I worked on",
+        items: [
+          "Collaborating with a team to develop an AI-powered academic assistant for VCU students that helps them understand assignment instructions, break down complex tasks, and clarify course concepts, offering guidance without completing work for them.",
+        ],
       },
       {
         heading: "What I built",
-        items: ["Developed and tested AI-powered workflows for mobile robots, drones, and collaborative robots using Python and AI frameworks."],
+        items: [
+          "Contributing to application development, exploring AI capabilities, and testing functionality using Python for AI and backend services and TypeScript for the frontend, while researching Canvas integration through the Canvas API and LTI 1.3, pending VCU approval.",
+        ],
       },
       {
-        heading: "What I worked on",
-        items: ["Worked with an interdisciplinary research team to build prototypes, test solutions, and present research findings."],
+        heading: "What I explored",
+        items: [
+          "Working through the real challenges of deploying AI in a university, including institutional approval, secure handling of student data, protecting academic integrity, and making the assistant genuinely useful, with the goal of making academic support more accessible.",
+        ],
       },
     ],
-    tech: ["Python", "AI frameworks", "Generative AI"],
-    skills: ["Research", "Prototyping", "Testing", "Interdisciplinary collaboration", "Presenting findings"],
+    tech: ["Python", "TypeScript", "Generative AI"],
+    skills: [
+      "Application development",
+      "Exploring AI capabilities",
+      "Testing",
+      "Canvas integration research",
+      "Responsible AI in education",
+      "Team collaboration",
+    ],
   },
   {
     slug: "be-fluent",
