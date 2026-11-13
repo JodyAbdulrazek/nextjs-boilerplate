@@ -6,14 +6,13 @@ import TechChips from "./TechChips";
 
 const TINTS = ["#9CC6EC", "#F4A7B9", "#F3D27A", "#B9A8E2", "#8FCFD6"];
 
-/** One stop on the journey: open and unboxed, hanging off the dashed trail */
+/** One stop on the journey: open and unboxed */
 export default function JourneyEntry({ work: w, index }: { work: Work; index: number }) {
   const meta = [w.dates, w.location].filter(Boolean).join("  ·  ");
   return (
     <article id={`entry-${w.slug}`} data-entry className="grid scroll-mt-28 grid-cols-[64px_minmax(0,1fr)] gap-x-5 sm:gap-x-8">
-      <div className="flex flex-col items-center">
-        <OrgLogo work={w} size={50} className={index % 2 ? "rotate-2" : "-rotate-2"} />
-        <span aria-hidden className="mt-3 w-0 flex-1 border-l-2 border-dashed border-leaf/25" />
+      <div className="flex justify-center">
+        <OrgLogo work={w} size={50} className={`self-start ${index % 2 ? "rotate-2" : "-rotate-2"}`} />
       </div>
 
       <div className="pb-4">

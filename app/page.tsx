@@ -72,7 +72,7 @@ export default function Home() {
               <h2 data-pup-stop data-pup-label="follow me! 🐾" className="text-5xl text-leaf sm:text-6xl">
                 {section.title}
               </h2>
-              <span aria-hidden className="ml-[31px] mt-8 block h-10 border-l-2 border-dashed border-leaf/25" />
+              <div aria-hidden className="h-12" />
 
               {section.items.map((w, i) => {
                 const next = section.items[i + 1];

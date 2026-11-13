@@ -101,8 +101,6 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
         <SparkleField count={8} seed={index + 30} colors={["#F4A7B9", "#9CC6EC", "#F3D27A"]} />
         <div className="relative mx-auto max-w-4xl px-5">
           <ol className="relative">
-            {/* the dotted thread that ties the chapters together */}
-            <span aria-hidden className="absolute bottom-6 left-[19px] top-6 border-l-2 border-dashed border-leaf/25" />
 
             {w.story.map((section, si) => (
               <Chapter key={section.heading} n={si + 1} of={chapters} title={section.heading}>
@@ -144,7 +142,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
           </ol>
 
           {/* ---------- prev / next ---------- */}
-          <div className="mt-20 flex flex-wrap items-end justify-between gap-6 border-t border-dashed border-leaf/25 pt-8">
+          <div className="mt-20 flex flex-wrap items-end justify-between gap-6 pt-4">
             <Link href={`/work/${prev.slug}`} className="group">
               <span className="text-sm uppercase tracking-[0.2em] text-leaf">← previous</span>
               <p className="mt-1 text-2xl text-ink underline decoration-transparent underline-offset-4 transition group-hover:decoration-blush">{prev.org}</p>
