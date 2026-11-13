@@ -12,6 +12,19 @@ function rng(seed: number) {
 }
 const n = (v: number) => Math.round(v * 10) / 10;
 
+/**
+ * Billow shading from the shadowed base (0) to the sunlit top (last):
+ * [sunny side, middle, shade side]. Each billow is lit from the upper right.
+ */
+const PUFF_LEVELS = [
+  ["#CFD8E9", "#A9B7D0", "#8596B8"],
+  ["#E2E8F2", "#BEC9DC", "#8FA0C0"],
+  ["#F1F4F9", "#D2DAE8", "#9DADCA"],
+  ["#FFFFFF", "#E4E9F2", "#B0BDD6"],
+  ["#FFFFFF", "#EFF2F8", "#C2CCE0"],
+  ["#FFFEFA", "#F8FAFC", "#D2DAE9"],
+];
+
 /* ---------- shared paint filters (rendered once in the layout) ---------- */
 
 export function PaintDefs() {
@@ -29,45 +42,39 @@ export function PaintDefs() {
           <feDisplacementMap in="SourceGraphic" scale="3.5" />
         </filter>
         {/*
-          Realistic cumulus: soften and tear the puff shapes with turbulence, build a height map
-          from them plus fine cauliflower noise, light it from the sun, then add a warm silver
-          lining on the sun-facing edges.
+          Realistic cumulus, painted the way an artist would: every billow has its own soft
+          gradient (bright toward the sun, cool grey-blue on the far side), so overlapping
+          billows form cauliflower lobes. The filter then tears the edges with turbulence, adds
+          a faint translucent haze and a warm-white lining on the sunny edges.
         */}
+        {PUFF_LEVELS.map(([hi, mid, lo], i) => (
+          <radialGradient key={i} id={`cloud-puff-${i}`} cx="0.5" cy="0.5" r="0.5" fx="0.64" fy="0.3">
+            <stop offset="0" stopColor={hi} />
+            <stop offset="0.52" stopColor={mid} />
+            <stop offset="0.83" stopColor={lo} />
+            <stop offset="0.92" stopColor={lo} stopOpacity="0.55" />
+            <stop offset="1" stopColor={lo} stopOpacity="0" />
+          </radialGradient>
+        ))}
         <filter id="cloud-real" x="-25%" y="-40%" width="150%" height="180%" colorInterpolationFilters="sRGB">
-          <feGaussianBlur in="SourceGraphic" stdDeviation="5" result="blur" />
+          <feGaussianBlur in="SourceGraphic" stdDeviation="1.2" result="blur" />
           <feTurbulence type="fractalNoise" baseFrequency="0.008" numOctaves="4" seed="3" result="warp" />
-          <feDisplacementMap in="blur" in2="warp" scale="50" xChannelSelector="R" yChannelSelector="G" result="soft" />
-          <feTurbulence type="fractalNoise" baseFrequency="0.022" numOctaves="3" seed="9" result="fine" />
-          <feDisplacementMap in="soft" in2="fine" scale="6" xChannelSelector="R" yChannelSelector="B" result="wisp" />
-          <feComponentTransfer in="wisp" result="body">
-            <feFuncA type="table" tableValues="0 0.3 0.72 0.94 1" />
-          </feComponentTransfer>
-          <feGaussianBlur in="wisp" stdDeviation="13" result="dome" />
-          <feTurbulence type="fractalNoise" baseFrequency="0.014" numOctaves="2" seed="21" result="billow" />
-          <feColorMatrix in="billow" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0.7 0 0 0 0" result="bumpsRaw" />
-          <feGaussianBlur in="bumpsRaw" stdDeviation="2.5" result="bumps" />
-          <feComposite in="dome" in2="bumps" operator="arithmetic" k1="0" k2="0.8" k3="0.4" k4="0" result="height" />
-          <feDiffuseLighting in="height" surfaceScale="6" diffuseConstant="1.05" lightingColor="#FFF9EE" result="light">
-            <feDistantLight azimuth="-65" elevation="48" />
-          </feDiffuseLighting>
-          {/* clouds are translucent: even the shaded side glows, so lift the darks */}
-          <feComponentTransfer in="light" result="lightSoft">
-            <feFuncR type="linear" slope="0.6" intercept="0.46" />
-            <feFuncG type="linear" slope="0.6" intercept="0.46" />
-            <feFuncB type="linear" slope="0.55" intercept="0.5" />
-          </feComponentTransfer>
-          <feComposite in="lightSoft" in2="body" operator="arithmetic" k1="1" k2="0" k3="0" k4="0" result="direct" />
-          {/* the shadows pick up the blue of the sky around them */}
-          <feFlood floodColor="#9CB8E4" />
-          <feComposite in2="body" operator="in" result="skyfill" />
-          <feComposite in="direct" in2="skyfill" operator="arithmetic" k1="0" k2="0.92" k3="0.22" k4="0" result="lit" />
-          <feOffset in="body" dx="-4" dy="6" result="shifted" />
+          <feDisplacementMap in="blur" in2="warp" scale="30" xChannelSelector="R" yChannelSelector="G" result="soft" />
+          <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" seed="9" result="fine" />
+          <feDisplacementMap in="soft" in2="fine" scale="5" xChannelSelector="R" yChannelSelector="B" result="body" />
+          {/* thin translucent haze around the edges */}
+          <feGaussianBlur in="body" stdDeviation="6" result="hazeA" />
+          <feFlood floodColor="#E3ECFA" floodOpacity="0.3" />
+          <feComposite in2="hazeA" operator="in" result="haze" />
+          {/* warm-white lining on the sun-facing edges */}
+          <feOffset in="body" dx="-3" dy="5" result="shifted" />
           <feComposite in="body" in2="shifted" operator="out" result="edge" />
-          <feGaussianBlur in="edge" stdDeviation="2.5" result="edgeSoft" />
-          <feFlood floodColor="#FFF6DD" floodOpacity="0.8" />
+          <feGaussianBlur in="edge" stdDeviation="1.8" result="edgeSoft" />
+          <feFlood floodColor="#FFF8E6" floodOpacity="0.8" />
           <feComposite in2="edgeSoft" operator="in" result="lining" />
           <feMerge>
-            <feMergeNode in="lit" />
+            <feMergeNode in="haze" />
+            <feMergeNode in="body" />
             <feMergeNode in="lining" />
           </feMerge>
         </filter>
@@ -83,52 +90,64 @@ export function PaintDefs() {
 
 /* ---------- Clouds: sunlit cumulus, like a bright summer sky ---------- */
 
-type Puff = { x: number; y: number; rad: number; lit: number };
-
-/** a cauliflower heap of puffs: flat-ish bottom, billowing dome on top */
-function cumulus(r: () => number, cx: number, base: number, w: number, h: number, count: number): Puff[] {
-  const puffs: Puff[] = [];
-  for (let i = 0; i < count; i++) {
-    const t = r();
-    const profile = h * Math.sin(Math.PI * t) ** 0.6;
-    const up = r() ** 0.8;
-    const rad = w * (0.06 + r() * 0.07) * (0.7 + 0.5 * Math.sin(Math.PI * t));
-    puffs.push({ x: cx + (t - 0.5) * w, y: base - rad * 0.6 - up * profile, rad, lit: up });
-  }
-  // a row along the bottom so the belly reads as one shadowed mass
-  for (let i = 0; i <= 6; i++) {
-    const t = 0.08 + (i / 6) * 0.84;
-    const rad = w * (0.07 + r() * 0.03);
-    puffs.push({ x: cx + (t - 0.5) * w, y: base - rad * 0.5, rad, lit: 0 });
-  }
-  return puffs.sort((a, b) => b.y - a.y);
-}
-
-const mix = (a: string, b: string, t: number) => {
-  const pa = [1, 3, 5].map((i) => parseInt(a.slice(i, i + 2), 16));
-  const pb = [1, 3, 5].map((i) => parseInt(b.slice(i, i + 2), 16));
-  return `rgb(${pa.map((v, i) => Math.round(v + (pb[i] - v) * t)).join(",")})`;
-};
-
-const CLOUD_LOW = "#97A7C5"; // shadowed belly
-const CLOUD_HIGH = "#FFFFFF"; // sunlit tops
+type Puff = { x: number; y: number; rx: number; ry: number; lit: number };
 
 /**
- * A cloud's puffs, drawn as soft-edged blobs (a faint outer ring plus a solid core) so each
- * billow becomes a little dome in the lighting filter. Lower puffs are bluer.
+ * A cumulus heap: a flat, shadowed base, big billows piled into a dome, and smaller
+ * billows sprouting from the sunlit tops (the "cauliflower" look).
  */
+function cumulus(r: () => number, cx: number, base: number, w: number, h: number, count: number): Puff[] {
+  const puffs: Puff[] = [];
+  // flat base: wide, squashed puffs
+  for (let i = 0; i <= 5; i++) {
+    const t = 0.1 + (i / 5) * 0.8;
+    const rad = w * (0.08 + r() * 0.03);
+    puffs.push({ x: cx + (t - 0.5) * w, y: base - rad * 0.45, rx: rad * 1.5, ry: rad * 0.7, lit: 0 });
+  }
+  // main billows
+  const main: Puff[] = [];
+  for (let i = 0; i < count; i++) {
+    const t = 0.06 + r() * 0.88;
+    const profile = h * Math.sin(Math.PI * t) ** 0.7;
+    const up = r() ** 0.7;
+    const rad = w * (0.07 + r() * 0.07) * (0.65 + 0.5 * Math.sin(Math.PI * t));
+    main.push({ x: cx + (t - 0.5) * w, y: base - rad * 0.9 - up * profile, rx: rad, ry: rad, lit: up });
+  }
+  puffs.push(...main);
+  // little billows sprouting from the upper edge of the higher ones
+  for (const m of main) {
+    if (m.lit < 0.55 || r() < 0.35) continue;
+    const k = 1 + Math.floor(r() * 2);
+    for (let j = 0; j < k; j++) {
+      const a = Math.PI * (1.25 + r() * 0.5); // toward the top
+      const rad = m.rx * (0.42 + r() * 0.2);
+      puffs.push({
+        x: m.x + Math.cos(a) * m.rx * 0.78,
+        y: m.y + Math.sin(a) * m.rx * 0.78,
+        rx: rad,
+        ry: rad,
+        lit: Math.min(1, m.lit + 0.15),
+      });
+    }
+  }
+  return puffs.sort((a, b) => b.y + b.ry - (a.y + a.ry));
+}
+
+
 function Puffs({ puffs }: { puffs: Puff[] }) {
+  const last = PUFF_LEVELS.length - 1;
   return (
     <g filter="url(#cloud-real)">
-      {puffs.map((p, i) => {
-        const fill = mix(CLOUD_LOW, CLOUD_HIGH, Math.min(1, 0.15 + p.lit * 1.2));
-        return (
-          <g key={i} fill={fill}>
-            <circle cx={n(p.x)} cy={n(p.y)} r={n(p.rad)} opacity="0.5" />
-            <circle cx={n(p.x + p.rad * 0.05)} cy={n(p.y - p.rad * 0.08)} r={n(p.rad * 0.72)} />
-          </g>
-        );
-      })}
+      {puffs.map((p, i) => (
+        <ellipse
+          key={i}
+          cx={n(p.x)}
+          cy={n(p.y)}
+          rx={n(p.rx * 1.12)}
+          ry={n(p.ry * 1.12)}
+          fill={`url(#cloud-puff-${Math.min(last, Math.round((0.1 + p.lit) * last))})`}
+        />
+      ))}
     </g>
   );
 }
@@ -174,7 +193,7 @@ export function CloudBank({
   return (
     <svg viewBox="0 0 1440 420" preserveAspectRatio="xMidYMax slice" className={`pointer-events-none block w-full overflow-visible ${className}`} aria-hidden>
       {clouds.map((row, i) => (
-        <g key={i} opacity={i === 0 ? 0.75 : 1}>
+        <g key={i} opacity={i === 0 ? 0.6 : 1}>
           {row.map((puffs, j) => (
             <Puffs key={j} puffs={puffs} />
           ))}
