@@ -24,6 +24,11 @@ export function PaintDefs() {
           <feTurbulence type="fractalNoise" baseFrequency="0.018" numOctaves="3" seed="3" />
           <feDisplacementMap in="SourceGraphic" scale="16" />
         </filter>
+        {/* fine wispy edges, for long fluffy fur */}
+        <filter id="fur-fluff" x="-20%" y="-20%" width="140%" height="140%">
+          <feTurbulence type="fractalNoise" baseFrequency="0.28" numOctaves="2" seed="5" />
+          <feDisplacementMap in="SourceGraphic" scale="3.5" />
+        </filter>
         {/* small bristly edges */}
         <filter id="paint-soft" x="-20%" y="-20%" width="140%" height="140%">
           <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="8" />

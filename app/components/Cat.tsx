@@ -19,13 +19,19 @@ const W = 110; // cat box size (px)
 const H = 92;
 const SPEED = 115; // px per second
 
-/* Lulu's palette: cream and peach fur, pink blush, loose dark ink lines */
-const FUR = "#F7D7A0";
-const FUR_SHADE = "#E9B486";
-const FUR_LIGHT = "#FFEFC9";
-const BLUSH = "#F0A39E";
-const LINE = "#3E2C27";
-const PATCH = "#6B4434";
+/* Lulu's palette: a fluffy white long-haired cat with odd eyes (one blue, one amber) */
+const FUR = "#FBFAF7";
+const FUR_SHADE = "#D8D4DD";
+const FUR_LIGHT = "#FFFFFF";
+const PINK = "#F2B6BE"; // inner ears
+const BLUSH = "#F6C6CC";
+const NOSE = "#E9A0A8";
+const LINE = "#A7A1AC";
+const LINE_DARK = "#5B5560";
+const WHISKER = "#C9C4CC";
+const EYE_BLUE = "#86B6E6";
+const EYE_AMBER = "#C9B653";
+const PUPIL = "#2A2328";
 
 const PURRS = ["purrr~ ♡", "mrrrow ♡", "more pats pls", "hehe ♡", "purr purr ♡"];
 const HELLOS = ["hi! pet me ♡", "psst… pat my head!", "meow! I'm Lulu"];
@@ -280,7 +286,7 @@ export default function Cat() {
         }
       }}
       role="img"
-      aria-label="Lulu, a cream-colored cat. Hover or tap to pet her."
+      aria-label="Lulu, a fluffy white cat with one blue eye and one amber eye. Hover or tap to pet her."
     >
       {bubble && (
         <div className="cat-bubble" key={bubble}>
@@ -302,121 +308,145 @@ export default function Cat() {
           height={H}
         >
           {/* soft ground shadow */}
-          <ellipse cx="60" cy="96" rx="34" ry="3.5" fill="#2F5A3A" opacity="0.2" />
+          <ellipse cx="60" cy="96" rx="36" ry="3.5" fill="#2F5A3A" opacity="0.22" />
 
           {/* ================= walking: side view ================= */}
           <g className="pose-walk">
-            <g className="cat-tail" style={{ transformOrigin: "30px 60px" }}>
-              <path d="M31 60 C 17 60, 9 50, 11 35 C 11.5 31, 12.5 29, 14 28" fill="none" stroke={FUR_SHADE} strokeWidth="8" strokeLinecap="round" filter="url(#paint-soft)" />
-              <path d="M31 59 C 18 58, 12 49, 13 36" fill="none" stroke={FUR} strokeWidth="5.5" strokeLinecap="round" />
-              <path d="M8 47 C 7 41, 8 35, 10 31" fill="none" stroke={LINE} strokeWidth="1.3" strokeLinecap="round" />
+            {/* big plume tail, held high */}
+            <g className="cat-tail" style={{ transformOrigin: "32px 58px" }}>
+              <path
+                d="M34 60 C 18 61, 5 52, 4 37 C 3 25, 10 15, 18 12 C 23 20, 22 32, 25 42 C 27 49, 31 53, 37 55Z"
+                fill={FUR}
+                filter="url(#fur-fluff)"
+              />
+              <path d="M30 56 C 18 52, 11 42, 12 28" stroke={FUR_SHADE} strokeWidth="3" fill="none" strokeLinecap="round" opacity="0.55" />
             </g>
 
             {/* far legs, in shadow */}
-            <g fill={FUR_SHADE}>
-              <path className="cat-leg leg-b" d="M41 70 L39 94 Q42 96 46 94 L48 72Z" />
-              <path className="cat-leg leg-a" d="M78 70 L77 94 Q80 96 84 94 L85 70Z" />
+            <g fill={FUR_SHADE} filter="url(#fur-fluff)">
+              <path className="cat-leg leg-b" d="M42 70 L40 94 Q43 96 47 94 L49 72Z" />
+              <path className="cat-leg leg-a" d="M79 70 L78 94 Q81 96 85 94 L86 70Z" />
             </g>
 
             <g className="cat-body">
-              <path d="M28 62 C 27 50, 44 45, 64 46 C 80 46, 92 50, 93 60 C 94 71, 84 77, 62 77 C 42 77, 29 73, 28 62Z" fill={FUR} filter="url(#paint-soft)" />
-              <path d="M34 70 C 46 76, 72 77, 88 70 C 84 76, 70 79, 58 78 C 46 78, 38 75, 34 70Z" fill={FUR_SHADE} opacity="0.7" />
-              <ellipse cx="40" cy="62" rx="12" ry="11" fill={FUR_SHADE} opacity="0.35" />
-              <path d="M40 50 C 52 46.5, 66 46.5, 80 48.5" stroke={FUR_LIGHT} strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.8" />
-              <ellipse cx="86" cy="64" rx="6" ry="7" fill={BLUSH} opacity="0.5" />
-              {/* quick, broken ink lines */}
-              <path d="M30 56 C 36 48, 52 45, 66 46" stroke={LINE} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-              <path d="M50 77.5 C 60 78.5, 70 78, 79 75.5" stroke={LINE} strokeWidth="1.2" fill="none" strokeLinecap="round" opacity="0.7" />
-              <path d="M57 51 q 4 2.5 8 1" stroke={PATCH} strokeWidth="1.8" fill="none" strokeLinecap="round" opacity="0.8" />
+              <path d="M28 62 C 27 49, 44 44, 64 45 C 80 45, 92 49, 93 60 C 94 72, 84 78, 62 78 C 42 78, 29 74, 28 62Z" fill={FUR} filter="url(#fur-fluff)" />
+              {/* grey shading on the belly and haunch */}
+              <path d="M34 71 C 46 77, 72 78, 88 71 C 84 77, 70 80, 58 79 C 46 79, 38 76, 34 71Z" fill={FUR_SHADE} opacity="0.75" filter="url(#fur-fluff)" />
+              <ellipse cx="40" cy="62" rx="12" ry="11" fill={FUR_SHADE} opacity="0.3" />
+              {/* fluffy chest ruff */}
+              <ellipse cx="88" cy="60" rx="9" ry="12" fill={FUR_LIGHT} filter="url(#fur-fluff)" />
+              <path d="M31 55 C 37 48, 52 44.5, 66 45.5" stroke={LINE} strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.6" />
             </g>
 
             {/* near legs */}
-            <g fill={FUR}>
+            <g fill={FUR} filter="url(#fur-fluff)">
               <path className="cat-leg leg-a" d="M34 68 C 33 78, 33 88, 34 94 Q38 96.5 43 94.5 L45 70Z" />
               <path className="cat-leg leg-b" d="M82 68 L81 94 Q85 96.5 90 94.5 L90 68Z" />
             </g>
 
             <g className="cat-head" style={{ transformOrigin: "90px 54px" }}>
-              <path d="M86 34 L88 18 L97 29Z" fill={FUR} stroke={LINE} strokeWidth="1.2" strokeLinejoin="round" />
-              <path d="M88.6 30 L89.4 22.5 L93.8 28.2Z" fill={BLUSH} />
-              <path d="M100 29 L108 17 L110 33Z" fill={FUR_SHADE} />
-              <path d="M108.3 18.5 L109.6 28" stroke={PATCH} strokeWidth="1.4" strokeLinecap="round" />
-              <path d="M82 44 C 82 33, 92 28, 101 29 C 110 30, 114 38, 113 45 C 112 52, 106 56, 98 56 C 89 56, 82 51, 82 44Z" fill={FUR} filter="url(#paint-soft)" />
-              <ellipse cx="106" cy="48" rx="6.5" ry="4.5" fill={FUR_LIGHT} opacity="0.9" />
-              <ellipse className="cat-blush" cx="96" cy="49" rx="4.2" ry="2.6" fill={BLUSH} />
+              {/* tall ears with pink insides */}
+              <path d="M85 35 L87 15 L97 28Z" fill={FUR} stroke={LINE} strokeWidth="0.8" strokeLinejoin="round" />
+              <path d="M87.8 30.5 L88.6 19.5 L94 27.5Z" fill={PINK} />
+              <path d="M100 28 L109 14 L111 33Z" fill={FUR_SHADE} />
+              <path d="M102.5 28 L108.5 18.5 L109.5 30Z" fill={PINK} opacity="0.75" />
+              {/* head with cheek fluff */}
+              <path d="M82 44 C 82 33, 92 27, 101 28 C 110 29, 114 37, 113 45 C 112 52, 106 56, 98 56 C 89 56, 82 51, 82 44Z" fill={FUR} filter="url(#fur-fluff)" />
+              <ellipse cx="87" cy="50" rx="6" ry="5" fill={FUR} filter="url(#fur-fluff)" />
+              <ellipse cx="100" cy="55" rx="8" ry="2.4" fill={FUR_SHADE} opacity="0.3" filter="url(#fur-fluff)" />
+              <ellipse className="cat-blush" cx="96" cy="49" rx="3.6" ry="2.2" fill={BLUSH} />
 
-              <g className="eyes-open" fill={LINE}>
-                <path d="M93.5 41 q 3 -2.6 6 0 q -3 2.6 -6 0Z" />
-                <path d="M104 40 q 2.6 -2.3 5.2 0 q -2.6 2.3 -5.2 0Z" />
+              {/* odd eyes: one blue, one amber */}
+              <g className="eyes-open">
+                <ellipse cx="97" cy="40.5" rx="2.9" ry="2.4" fill={EYE_BLUE} />
+                <ellipse cx="97.2" cy="40.5" rx="0.7" ry="2" fill={PUPIL} />
+                <circle cx="96.2" cy="39.6" r="0.6" fill="#fff" />
+                <ellipse cx="106.5" cy="39.5" rx="2.4" ry="2.1" fill={EYE_AMBER} />
+                <ellipse cx="106.7" cy="39.5" rx="0.6" ry="1.8" fill={PUPIL} />
+                <circle cx="105.9" cy="38.7" r="0.5" fill="#fff" />
               </g>
-              <g className="eyes-happy" fill="none" stroke={LINE} strokeWidth="1.5" strokeLinecap="round">
-                <path d="M93.5 42 q 3 -2.8 6 0" />
-                <path d="M104 41 q 2.6 -2.6 5.2 0" />
+              <g className="eyes-happy" fill="none" stroke={LINE_DARK} strokeWidth="1.3" strokeLinecap="round">
+                <path d="M94 41.5 q 3 -2.6 6 0" />
+                <path d="M104 40.5 q 2.6 -2.4 5.2 0" />
               </g>
 
-              <path d="M110.5 45.5 L113 45.5 L111.8 47.2Z" fill="#D9837F" />
-              <path d="M107.5 50 q 1.8 1.8 3.6 0" stroke={LINE} strokeWidth="1.1" fill="none" strokeLinecap="round" />
-              <g stroke={LINE} strokeWidth="0.7" strokeLinecap="round" opacity="0.55">
-                <path d="M110 48 L119 45.5" />
-                <path d="M110 49.5 L119 50" />
+              <path d="M110.5 45.2 L113.2 45.2 L111.9 47Z" fill={NOSE} />
+              <path d="M107.6 49.5 q 1.8 1.6 3.6 0" stroke={LINE} strokeWidth="0.9" fill="none" strokeLinecap="round" />
+              <g stroke={WHISKER} strokeWidth="0.6" strokeLinecap="round">
+                <path d="M110 47.5 L121 44" />
+                <path d="M110 49 L121 49.5" />
+                <path d="M109 50.5 L119 54" />
               </g>
-              <path d="M83 40 C 84 34, 88 30, 92 29" stroke={LINE} strokeWidth="1.4" fill="none" strokeLinecap="round" />
-              <path d="M98 56 C 104 56, 109 53, 111 50" stroke={LINE} strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.5" />
             </g>
           </g>
 
-          {/* ================= resting: sitting, tail curled round her paws ================= */}
+          {/* ================= resting: sitting tall, plume tail laid out in front ================= */}
           <g className="pose-sit">
-            <g className="cat-breathe" style={{ transformOrigin: "60px 96px" }}>
-              <path d="M38 95 C 30 94, 30 80, 34 68 C 38 56, 48 48, 60 47 C 74 46, 84 56, 86 70 C 88 84, 84 94, 76 95Z" fill={FUR} filter="url(#paint-soft)" />
-              <path d="M36 72 C 34 84, 36 92, 45 95 L38 95 C 31 93, 31 82, 36 72Z" fill={FUR_SHADE} opacity="0.7" />
-              <ellipse cx="46" cy="80" rx="12" ry="13" fill={FUR_SHADE} opacity="0.3" />
-              <ellipse cx="73" cy="66" rx="7" ry="9" fill={BLUSH} opacity="0.5" />
-              <path d="M70 54 C 78 58, 82 66, 83 76" stroke={FUR_LIGHT} strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.7" />
-              <path d="M36 66 C 40 56, 48 50, 58 48" stroke={LINE} strokeWidth="1.5" fill="none" strokeLinecap="round" />
-              <path d="M84.5 66 C 86.5 73, 86.5 80, 85 87" stroke={PATCH} strokeWidth="1.8" fill="none" strokeLinecap="round" />
-
-              {/* tail wrapped around the front */}
-              <path d="M40 92 C 45 99, 61 100, 73 96.5" stroke={FUR_SHADE} strokeWidth="8" fill="none" strokeLinecap="round" filter="url(#paint-soft)" />
-              <path d="M41 92 C 46 97.5, 61 98.5, 72 95.5" stroke={FUR} strokeWidth="4.5" fill="none" strokeLinecap="round" />
-              <path d="M44 98 C 52 101, 62 100.5, 71 98.5" stroke={LINE} strokeWidth="1.3" fill="none" strokeLinecap="round" />
-
-              <g stroke={LINE} strokeWidth="0.9">
-                <ellipse cx="70" cy="94" rx="5.5" ry="2.8" fill={FUR_LIGHT} />
-                <ellipse cx="79" cy="94" rx="5" ry="2.6" fill={FUR_LIGHT} />
+            <g className="cat-breathe" style={{ transformOrigin: "62px 96px" }}>
+              {/* tall body */}
+              <path d="M44 93 C 37 84, 37 68, 43 58 C 49 49, 57 45, 66 45 C 76 45, 82 53, 84 65 C 86 78, 84 88, 80 93Z" fill={FUR} filter="url(#fur-fluff)" />
+              {/* grey shading down her right side */}
+              <path d="M77 54 C 84 62, 87 77, 82 93 L75 93 C 80 80, 80 66, 77 54Z" fill={FUR_SHADE} opacity="0.6" filter="url(#fur-fluff)" />
+              <ellipse cx="47" cy="78" rx="7" ry="13" fill={FUR_SHADE} opacity="0.3" />
+              {/* front legs */}
+              <g fill={FUR} filter="url(#fur-fluff)">
+                <rect x="56.5" y="64" width="8.5" height="29" rx="4" />
+                <rect x="66" y="64" width="8.5" height="29" rx="4" />
               </g>
+              <path d="M65.5 70 L65.5 92" stroke={FUR_SHADE} strokeWidth="1.2" strokeLinecap="round" opacity="0.6" />
+              <path d="M74.5 68 L74.5 92" stroke={FUR_SHADE} strokeWidth="1.4" strokeLinecap="round" opacity="0.5" />
+              {/* big fluffy chest ruff */}
+              <ellipse cx="64" cy="58" rx="13" ry="11" fill={FUR_LIGHT} filter="url(#fur-fluff)" />
+              <path d="M57 63 q 3 3 6 0 M64 64 q 3 3 6 0" stroke={FUR_SHADE} strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.6" />
+
+              {/* plume tail sweeping out to the left, in front of her paws */}
+              <path
+                d="M86 93 C 78 99, 50 100, 24 97.5 C 11 96.5, 6 90, 13 86.5 C 25 83, 52 87.5, 76 88Z"
+                fill={FUR}
+                filter="url(#fur-fluff)"
+              />
+              <path d="M24 91.5 C 42 94.5, 62 95, 80 92" stroke={FUR_SHADE} strokeWidth="2.5" fill="none" strokeLinecap="round" opacity="0.5" />
             </g>
 
-            <g transform="rotate(-6 66 48)">
-              <g className="cat-head" style={{ transformOrigin: "64px 48px" }}>
-                <path d="M52 28 L53 12 L62 22Z" fill={FUR} stroke={LINE} strokeWidth="1.2" strokeLinejoin="round" />
-                <path d="M54.4 24 L55 16 L59.4 21.8Z" fill={BLUSH} />
-                <path d="M70 20 L80 12 L80.5 28Z" fill={FUR_SHADE} />
-                <path d="M79.6 13.5 L80.2 24" stroke={PATCH} strokeWidth="1.5" strokeLinecap="round" />
-                <path d="M50 34 C 49 24, 58 18, 67 18 C 77 18, 84 25, 83 34 C 82 43, 75 48, 66 48 C 57 48, 51 42, 50 34Z" fill={FUR} filter="url(#paint-soft)" />
-                <ellipse cx="70" cy="38.5" rx="7" ry="5" fill={FUR_LIGHT} opacity="0.9" />
-                <ellipse className="cat-blush" cx="57.5" cy="39" rx="4" ry="2.5" fill={BLUSH} />
-                <ellipse className="cat-blush" cx="79" cy="37" rx="3.4" ry="2.2" fill={BLUSH} />
+            <g transform="rotate(-4 64 45)">
+              <g className="cat-head" style={{ transformOrigin: "64px 46px" }}>
+                {/* tall ears with pink insides */}
+                <path d="M50 25 L51 5 L61 17Z" fill={FUR} stroke={LINE} strokeWidth="0.8" strokeLinejoin="round" />
+                <path d="M52.5 21.5 L53 9.5 L58.8 17Z" fill={PINK} />
+                <path d="M68 17 L78 5 L79.5 25Z" fill={FUR_SHADE} />
+                <path d="M70.5 17.5 L77 9.5 L77.8 21.5Z" fill={PINK} opacity="0.8" />
+                {/* head + cheek fluff */}
+                <path d="M50 32 C 49 22, 56 16, 64.5 16 C 73 16, 80 22, 79 32 C 78 40, 72 45, 64.5 45 C 56.5 45, 51 40, 50 32Z" fill={FUR} filter="url(#fur-fluff)" />
+                <ellipse cx="52" cy="38" rx="5" ry="5.5" fill={FUR} filter="url(#fur-fluff)" />
+                <ellipse cx="76" cy="38" rx="3.5" ry="5" fill={FUR_SHADE} opacity="0.25" filter="url(#fur-fluff)" />
+                <ellipse cx="66" cy="45" rx="8" ry="2" fill={FUR_SHADE} opacity="0.25" filter="url(#fur-fluff)" />
+                <ellipse className="cat-blush" cx="56.5" cy="37" rx="3.6" ry="2.2" fill={BLUSH} />
+                <ellipse className="cat-blush" cx="73.5" cy="36.5" rx="3.2" ry="2" fill={BLUSH} />
 
-                <g className="eyes-open" fill={LINE}>
-                  <path d="M58 32 q 3 -2.6 6 0 q -3 2.6 -6 0Z" />
-                  <path d="M71.5 31 q 3 -2.6 6 0 q -3 2.6 -6 0Z" />
+                {/* odd eyes: left blue, right amber */}
+                <g className="eyes-open">
+                  <ellipse cx="58" cy="29.5" rx="3.1" ry="2.5" fill={EYE_BLUE} />
+                  <ellipse cx="58.2" cy="29.5" rx="0.75" ry="2.1" fill={PUPIL} />
+                  <circle cx="57.1" cy="28.6" r="0.65" fill="#fff" />
+                  <ellipse cx="71" cy="29.5" rx="3.1" ry="2.5" fill={EYE_AMBER} />
+                  <ellipse cx="71.2" cy="29.5" rx="0.75" ry="2.1" fill={PUPIL} />
+                  <circle cx="70.1" cy="28.6" r="0.65" fill="#fff" />
                 </g>
-                <g className="eyes-happy" fill="none" stroke={LINE} strokeWidth="1.5" strokeLinecap="round">
-                  <path d="M58 33 q 3 -2.8 6 0" />
-                  <path d="M71.5 32 q 3 -2.8 6 0" />
+                <g className="eyes-happy" fill="none" stroke={LINE_DARK} strokeWidth="1.3" strokeLinecap="round">
+                  <path d="M55 30.5 q 3 -2.8 6 0" />
+                  <path d="M68 30.5 q 3 -2.8 6 0" />
                 </g>
 
-                <path d="M67.6 35.2 L70.4 35.2 L69 37Z" fill="#D9837F" />
-                <path d="M65.6 39 q 1.7 2 3.4 0 q 1.7 2 3.4 0" stroke={LINE} strokeWidth="1" fill="none" strokeLinecap="round" />
-                <g stroke={LINE} strokeWidth="0.7" strokeLinecap="round" opacity="0.55">
-                  <path d="M53 37 L43 35" />
-                  <path d="M53 39 L44 40.5" />
-                  <path d="M83 34 L93 31" />
-                  <path d="M83 36 L93 36.5" />
+                <path d="M63.1 34.6 L66 34.6 L64.55 36.5Z" fill={NOSE} />
+                <path d="M62.6 38 q 1.0 1.4 1.95 0 q 0.95 1.4 1.95 0" stroke={LINE} strokeWidth="0.85" fill="none" strokeLinecap="round" />
+                <g stroke={WHISKER} strokeWidth="0.6" strokeLinecap="round">
+                  <path d="M54 36 L40 33" />
+                  <path d="M54 37.5 L40 38.5" />
+                  <path d="M54.5 39 L42 43" />
+                  <path d="M75 36 L89 33" />
+                  <path d="M75 37.5 L89 38.5" />
+                  <path d="M74.5 39 L87 43" />
                 </g>
-                <path d="M51 30 C 52 24, 56 20, 60 19" stroke={LINE} strokeWidth="1.4" fill="none" strokeLinecap="round" />
-                <path d="M60 47.5 C 66 49, 72 48, 76 45" stroke={LINE} strokeWidth="1" fill="none" strokeLinecap="round" opacity="0.5" />
               </g>
             </g>
           </g>
