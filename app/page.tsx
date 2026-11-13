@@ -69,10 +69,7 @@ export default function Home() {
           const nextSection = SECTIONS[si + 1];
           return (
             <section key={section.id} id={section.id} className="relative mx-auto max-w-3xl scroll-mt-10 px-5 pt-24">
-              <p className="text-sm uppercase tracking-[0.3em] text-blush">
-                {String(si + 1).padStart(2, "0")} <span className="text-ink-soft/70">/ 03</span>
-              </p>
-              <h2 data-pup-stop data-pup-label="follow me! 🐾" className="mt-2 text-5xl text-leaf sm:text-6xl">
+              <h2 data-pup-stop data-pup-label="follow me! 🐾" className="text-5xl text-leaf sm:text-6xl">
                 {section.title}
               </h2>
               <span aria-hidden className="ml-[31px] mt-8 block h-10 border-l-2 border-dashed border-leaf/25" />
