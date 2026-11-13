@@ -5,7 +5,6 @@ export type Work = {
   role: string;
   location?: string;
   dates?: string;
-  emoji: string;
   /** Card accent color */
   color: string;
   tagline: string;
@@ -21,7 +20,6 @@ export const experiences: Work[] = [
     role: "Product Manager Apprenticeship",
     location: "Remote",
     dates: "August 2026 – Present",
-    emoji: "📸",
     color: "#F6B8C8",
     tagline: "Finding engagement gaps on a 40M-user social platform",
     bullets: [
@@ -38,7 +36,6 @@ export const experiences: Work[] = [
     role: "Applied AI Engineering Fellow",
     location: "Remote",
     dates: "August 2026 – Present",
-    emoji: "💻",
     color: "#A9D3F5",
     tagline: "Building real AI apps end-to-end with Claude Code",
     bullets: [
@@ -55,7 +52,6 @@ export const experiences: Work[] = [
     role: "Researcher · Virginia Commonwealth University",
     location: "Richmond, VA",
     dates: "August 2026 – Present",
-    emoji: "🤖",
     color: "#C9B8F0",
     tagline: "Teaching robots to understand tasks and work alongside people",
     bullets: [
@@ -72,7 +68,6 @@ export const experiences: Work[] = [
     role: "EdTech Program Manager",
     location: "Washington, DC",
     dates: "August 2021 – August 2023",
-    emoji: "🌍",
     color: "#F7D774",
     tagline: "Founded and scaled a language platform for 1,000+ learners",
     bullets: [
@@ -89,7 +84,6 @@ export const experiences: Work[] = [
     role: "Software Developer Fellow",
     location: "College Park, Maryland",
     dates: "June 2026 – August 2026",
-    emoji: "🗓️",
     color: "#9FDBB4",
     tagline: "An AI-powered task manager, built the Agile way",
     bullets: [
@@ -106,7 +100,6 @@ export const experiences: Work[] = [
     role: "Machine Learning Engineer Fellow",
     location: "Washington, DC",
     dates: "June 2025 – July 2025",
-    emoji: "🧠",
     color: "#F9C59B",
     tagline: "GPT-4 powered, personalized mental health support",
     bullets: [
@@ -122,7 +115,6 @@ export const experiences: Work[] = [
     role: "Mentor",
     location: "Richmond, VA",
     dates: "March 2025 – August 2025",
-    emoji: "✍️",
     color: "#F4A7B9",
     tagline: "15+ hands-on workshops on generative AI tools",
     bullets: [
@@ -138,7 +130,6 @@ export const projects: Work[] = [
     kind: "project",
     org: "Therapy Cafe",
     role: "AI Mental Health Support",
-    emoji: "☕",
     color: "#E8C9A8",
     tagline: "A cozy corner of the internet to talk, reflect, and grow",
     bullets: [
