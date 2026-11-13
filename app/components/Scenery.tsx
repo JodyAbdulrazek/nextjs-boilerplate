@@ -11,35 +11,6 @@ function rng(seed: number) {
   };
 }
 
-/* ---------- shared paint filters (rendered once in the layout) ---------- */
-
-export function PaintDefs() {
-  return (
-    <svg width="0" height="0" className="absolute" aria-hidden focusable="false">
-      <defs>
-        {/* fine wispy edges, for long fluffy fur */}
-        <filter id="fur-fluff" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.28" numOctaves="2" seed="5" />
-          <feDisplacementMap in="SourceGraphic" scale="3.5" />
-        </filter>
-        {/* watercolor: softly feathered edges plus uneven pigment, like paint on paper */}
-        <filter id="watercolor" x="-15%" y="-15%" width="130%" height="130%" colorInterpolationFilters="sRGB">
-          <feTurbulence type="fractalNoise" baseFrequency="0.3" numOctaves="2" seed="5" result="edgeNoise" />
-          <feDisplacementMap in="SourceGraphic" in2="edgeNoise" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="feathered" />
-          <feTurbulence type="fractalNoise" baseFrequency="0.07" numOctaves="3" seed="12" result="blots" />
-          <feColorMatrix in="blots" type="matrix" values="0.32 0 0 0 0.8  0.32 0 0 0 0.8  0.32 0 0 0 0.8  0 0 0 0 1" result="pigment" />
-          <feComposite in="feathered" in2="pigment" operator="arithmetic" k1="1.04" k2="0" k3="0" k4="0" />
-        </filter>
-        {/* small bristly edges */}
-        <filter id="paint-soft" x="-20%" y="-20%" width="140%" height="140%">
-          <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="8" />
-          <feDisplacementMap in="SourceGraphic" scale="7" />
-        </filter>
-      </defs>
-    </svg>
-  );
-}
-
 /* ---------- Sparkles (long and thin, painted) ---------- */
 
 export function Sparkle({ size = 22, color = "#F2A3B3", style }: { size?: number; color?: string; style?: CSSProperties }) {

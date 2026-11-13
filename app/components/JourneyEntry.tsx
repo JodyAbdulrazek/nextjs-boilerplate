@@ -18,8 +18,6 @@ export default function JourneyEntry({ work: w, index }: { work: Work; index: nu
 
       <div className="pb-4">
         <h3
-          data-pup-stop
-          data-pup-label={`ooh, ${w.org.startsWith("Generative") ? "the robot lab" : w.org}!`}
           className="inline-block text-3xl leading-tight text-ink sm:text-4xl"
         >
           {w.org}

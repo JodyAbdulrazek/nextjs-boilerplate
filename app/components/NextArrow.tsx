@@ -2,14 +2,13 @@
 
 /**
  * A little hand-drawn arrow between entries. Clicking it glides the page to the
- * next entry and asks Lulu to trot over there too.
+ * next entry.
  */
 export default function NextArrow({ to, label, up = false, hero = false }: { to: string; label: string; up?: boolean; hero?: boolean }) {
   const go = () => {
     const el = document.getElementById(to);
     if (!el) return;
     el.scrollIntoView({ behavior: "smooth", block: "start" });
-    window.dispatchEvent(new CustomEvent("pup:goto", { detail: { id: to } }));
   };
 
   // a simple, gently curving arrow, like a quick pencil stroke

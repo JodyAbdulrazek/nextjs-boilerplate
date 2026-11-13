@@ -22,7 +22,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 }
 
 const BULLET_TINTS = ["#9CC6EC", "#F4A7B9", "#F3D27A", "#B9A8E2", "#8FCFD6"];
-const PUP_LINES = ["proud of this one ♡", "read this part!", "ooh, look!", "so cool, right?", "this one's my fave"];
 
 /** One step of the story, with its number on the dotted thread */
 function Chapter({ n, of, title, children }: { n: number; of: number; title: string; children: React.ReactNode }) {
@@ -69,7 +68,6 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const meta = [w.dates, w.location].filter(Boolean).join("  ·  ");
   const backTo = w.kind === "project" ? "projects" : w.kind === "leadership" ? "leadership" : "experiences";
   const chapters = w.story.length + 1; // story sections + skills
-  let pupLine = 0;
 
   return (
     <main>
@@ -103,12 +101,9 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
               <Chapter key={section.heading} n={si + 1} of={chapters} title={section.heading}>
                 <ul className="grid gap-6">
                   {section.items.map((item, i) => {
-                    const line = PUP_LINES[pupLine++ % PUP_LINES.length];
                     return (
                       <li
                         key={item}
-                        data-pup-stop
-                        data-pup-label={line}
                         className="flex gap-4"
                       >
                         <span className="mt-1">

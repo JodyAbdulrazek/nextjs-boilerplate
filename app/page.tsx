@@ -69,7 +69,7 @@ export default function Home() {
           const nextSection = SECTIONS[si + 1];
           return (
             <section key={section.id} id={section.id} className="relative mx-auto max-w-3xl scroll-mt-10 px-5 pt-24">
-              <h2 data-pup-stop data-pup-label="follow me! 🐾" className="text-4xl leading-tight text-leaf sm:text-5xl">
+              <h2 className="text-4xl leading-tight text-leaf sm:text-5xl">
                 {section.title}
               </h2>
               <div aria-hidden className="h-12" />

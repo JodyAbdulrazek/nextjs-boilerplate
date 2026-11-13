@@ -1,6 +1,4 @@
 import type { Metadata } from "next";
-import Puppy from "./components/Puppy";
-import { PaintDefs } from "./components/Scenery";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -17,9 +15,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="antialiased">
       <body className="min-h-screen overflow-x-hidden">
-        <PaintDefs />
         {children}
-        <Puppy />
       </body>
     </html>
   );
