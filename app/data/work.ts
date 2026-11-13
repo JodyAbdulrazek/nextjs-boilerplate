@@ -67,11 +67,6 @@ export const experiences: Work[] = [
           { title: "Daily Memories", text: "Let users revisit past BeReal posts from the same day in previous years to encourage them to keep sharing." },
         ],
       },
-      {
-        heading: "Project Direction",
-        intro:
-          "Focus on BeReal Circles or Daily Memories first. Both are manageable projects that demonstrate product research, feature design, development, usability testing, and iteration.",
-      },
     ],
     tech: [],
     skills: ["User Research", "Competitive Analysis", "Product Strategy", "Figma", "Prototyping", "Usability Testing", "Feature Development"],
