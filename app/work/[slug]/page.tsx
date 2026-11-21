@@ -66,7 +66,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const next = allWork[(index + 1) % allWork.length];
   const prev = allWork[(index - 1 + allWork.length) % allWork.length];
   const meta = [w.dates, w.location].filter(Boolean).join("  ·  ");
-  const backTo = w.kind === "project" ? "projects" : w.kind === "leadership" ? "leadership" : "experiences";
+  const backTo = "projects";
   const extras = w.extras ?? [];
   const chapters = w.story.length + extras.length + 1; // story sections + extras + skills
 

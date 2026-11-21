@@ -3,14 +3,12 @@ import Footer from "./components/Footer";
 import JourneyEntry from "./components/JourneyEntry";
 import NextArrow from "./components/NextArrow";
 import { SparkleField } from "./components/Scenery";
-import { experiences, leadership, projects } from "./data/work";
+import { projects } from "./data/work";
 
 const INTERESTS = ["product design", "product management", "project management", "program management"];
 
 const SECTIONS = [
-  { id: "experiences", title: "My Experiences", items: experiences },
   { id: "projects", title: "Personal & Passion Projects", items: projects },
-  { id: "leadership", title: "Leadership Experience", items: leadership },
 ];
 
 export default function Home() {
@@ -22,14 +20,8 @@ export default function Home() {
           Judy Abdelrazek
         </Link>
         <div className="flex gap-4 text-base sm:gap-6 sm:text-lg">
-          <a href="#experiences" className="underline-offset-4 hover:underline">
-            experiences
-          </a>
           <a href="#projects" className="underline-offset-4 hover:underline">
             projects
-          </a>
-          <a href="#leadership" className="underline-offset-4 hover:underline">
-            leadership
           </a>
         </div>
       </nav>
@@ -57,12 +49,12 @@ export default function Home() {
             ))}
           </p>
           <div className="mt-14">
-            <NextArrow to="experiences" label="start the journey" hero />
+            <NextArrow to="projects" label="start the journey" hero />
           </div>
         </div>
       </section>
 
-      {/* ---------- the journey: experiences, projects, leadership ---------- */}
+      {/* ---------- the journey: projects ---------- */}
       <div className="heavens relative -mt-px overflow-hidden pb-28">
         <SparkleField count={14} seed={5} colors={["#F4A7B9", "#9CC6EC", "#F3D27A"]} />
         {SECTIONS.map((section, si) => {
