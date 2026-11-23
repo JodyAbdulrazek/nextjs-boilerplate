@@ -69,7 +69,8 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const shots = w.screenshots ?? [];
   // optional summary + story sections + optional screenshots + extras + skills
   const lead = w.summary ? 1 : 0;
-  const chapters = lead + w.story.length + (shots.length ? 1 : 0) + extras.length + 1;
+  const hasSkills = w.tech.length > 0 || w.skills.length > 0;
+  const chapters = lead + w.story.length + (shots.length ? 1 : 0) + extras.length + (hasSkills ? 1 : 0);
 
   return (
     <main>
@@ -162,6 +163,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
               </Chapter>
             ))}
 
+            {hasSkills && (
             <Chapter n={chapters} of={chapters} title={w.tech.length ? "Skills & technologies" : "Skills I grew"}>
               <div>
                 {w.tech.length > 0 && (
@@ -170,9 +172,12 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
                     <TechChips tech={w.tech} className="mt-3" />
                   </>
                 )}
-                <p className={`text-xl italic leading-relaxed text-ink-soft ${w.tech.length ? "mt-6" : ""}`}>{w.skills.join("  ·  ")}</p>
+                {w.skills.length > 0 && (
+                  <p className={`text-xl italic leading-relaxed text-ink-soft ${w.tech.length ? "mt-6" : ""}`}>{w.skills.join("  ·  ")}</p>
+                )}
               </div>
             </Chapter>
+            )}
           </ol>
 
           {w.site && (

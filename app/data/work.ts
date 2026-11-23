@@ -88,6 +88,30 @@ export const projects: Work[] = [
     tech: ["GPT-4", "Python", "Hugging Face", "OpenAI APIs", "NLP"],
     skills: ["NLP workflows", "Personalized user interactions"],
   },
+  {
+    slug: "nourish",
+    kind: "project",
+    org: "Nourish",
+    name: "Nourish",
+    role: "Personalized Nutrition & Meal-Planning Platform",
+    color: "#A8C3A0",
+    tagline: "Making healthy eating simple, affordable, and fun",
+    story: [],
+    summary:
+      "Nourish is a personalized nutrition and meal-planning platform designed to make healthy eating simple, affordable, and fun. The platform helps users build balanced eating habits through personalized meal plans, healthy recipes, nutrition information, and grocery lists. By considering individual dietary preferences, nutritional needs, budgets, and ingredients already available in their pantry or fridge, Nourish creates a customized experience that helps users discover new meals, reduce food waste, save money, and develop healthier eating habits.",
+    screenshots: [
+      { src: "/projects/nourish/today.jpg", caption: "Today" },
+      { src: "/projects/nourish/this-week.jpg", caption: "This week & grocery list" },
+      { src: "/projects/nourish/kitchen.jpg", caption: "Kitchen" },
+      { src: "/projects/nourish/pantry.jpg", caption: "Pantry" },
+      { src: "/projects/nourish/plan.jpg", caption: "Weekly plan" },
+      { src: "/projects/nourish/recipes.jpg", caption: "Recipes" },
+      { src: "/projects/nourish/nutrition.jpg", caption: "Nutrition" },
+    ],
+    site: "https://nourish-zff8.vercel.app/",
+    tech: [],
+    skills: [],
+  },
 ];
 
 export const allWork: Work[] = [...projects];
