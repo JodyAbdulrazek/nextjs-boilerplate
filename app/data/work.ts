@@ -59,7 +59,7 @@ export const projects: Work[] = [
       { src: "/projects/elara/chatbot.jpg", caption: "Elara Chatbot" },
     ],
     site: "https://taskmanagment-vsgo.vercel.app/",
-    tech: ["TypeScript", "Python", "Claude API", "Git/GitHub"],
+    tech: ["Python", "Claude API", "Git/GitHub"],
     skills: ["AI task prioritization", "Smart scheduling", "Automated reminders", "Designing, testing & refining features", "Agile development", "Team collaboration"],
   },
   {
