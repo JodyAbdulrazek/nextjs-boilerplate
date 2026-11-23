@@ -34,12 +34,12 @@ export default function Home() {
           <p className="mx-auto mt-6 max-w-xl text-xl leading-snug">
             a Computer Science &amp; Economics student at Virginia Commonwealth University.
           </p>
-          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
-            Contact information - phone number:{" "}
+          <p className="mx-auto mt-5 max-w-xl text-lg italic text-leaf">
+            Contact information -{" "}
             <a href="tel:+15718308310" className="whitespace-nowrap underline-offset-4 hover:underline">
               (571) 830 - 8310
             </a>{" "}
-            &amp; Email:{" "}
+            &amp;{" "}
             <a href="mailto:jody.abdelrazek@gmail.com" className="underline-offset-4 hover:underline">
               jody.abdelrazek@gmail.com
             </a>
