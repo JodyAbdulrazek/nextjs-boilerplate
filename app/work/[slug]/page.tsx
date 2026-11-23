@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "../../components/Footer";
 import OrgLogo from "../../components/OrgLogo";
+import Screenshot, { SiteLink } from "../../components/Screenshot";
 import { Bullet, SparkleField } from "../../components/Scenery";
 import TechChips from "../../components/TechChips";
 import { allWork, getWork, KIND_LABEL } from "../../data/work";
@@ -68,7 +69,10 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
   const meta = [w.dates, w.location].filter(Boolean).join("  ·  ");
   const backTo = "projects";
   const extras = w.extras ?? [];
-  const chapters = w.story.length + extras.length + 1; // story sections + extras + skills
+  const shots = w.screenshots ?? [];
+  // optional summary + story sections + optional screenshots + extras + skills
+  const lead = w.summary ? 1 : 0;
+  const chapters = lead + w.story.length + (shots.length ? 1 : 0) + extras.length + 1;
 
   return (
     <main>
@@ -98,8 +102,14 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
         <div className="relative mx-auto max-w-4xl px-5">
           <ol className="relative">
 
+            {w.summary && (
+              <Chapter n={1} of={chapters} title={`About ${w.org.split(" ")[0]}`}>
+                <p className="text-lg leading-relaxed text-ink-soft">{w.summary}</p>
+              </Chapter>
+            )}
+
             {w.story.map((section, si) => (
-              <Chapter key={section.heading} n={si + 1} of={chapters} title={section.heading}>
+              <Chapter key={section.heading} n={lead + si + 1} of={chapters} title={section.heading}>
                 <ul className="grid gap-6">
                   {section.items.map((item, i) => {
                     return (
@@ -120,8 +130,18 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
               </Chapter>
             ))}
 
+            {shots.length > 0 && (
+              <Chapter n={lead + w.story.length + 1} of={chapters} title="A look inside">
+                <div className="grid gap-12">
+                  {shots.map((shot, i) => (
+                    <Screenshot key={shot.src} {...shot} priority={i === 0} />
+                  ))}
+                </div>
+              </Chapter>
+            )}
+
             {extras.map((ex, ei) => (
-              <Chapter key={ex.heading} n={w.story.length + ei + 1} of={chapters} title={ex.heading}>
+              <Chapter key={ex.heading} n={lead + w.story.length + (shots.length ? 1 : 0) + ei + 1} of={chapters} title={ex.heading}>
                 {ex.intro && <p className="text-lg leading-relaxed text-ink-soft">{ex.intro}</p>}
                 {ex.items && (
                   <ul className={`grid gap-6 ${ex.intro ? "mt-6" : ""}`}>
@@ -158,6 +178,12 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
               </div>
             </Chapter>
           </ol>
+
+          {w.site && (
+            <div className="mt-16 pl-14">
+              <SiteLink href={w.site} />
+            </div>
+          )}
 
           {/* ---------- prev / next ---------- */}
           <div className="mt-20 flex flex-wrap items-end justify-between gap-6 pt-4">

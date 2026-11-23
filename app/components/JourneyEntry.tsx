@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { bulletsOf, type Work } from "../data/work";
 import OrgLogo from "./OrgLogo";
+import Screenshot, { SiteLink } from "./Screenshot";
 import { Bullet } from "./Scenery";
 import TechChips from "./TechChips";
 
@@ -25,7 +26,15 @@ export default function JourneyEntry({ work: w, index }: { work: Work; index: nu
         <p className="mt-1 text-xl italic text-leaf">{w.role}</p>
         {meta && <p className="mt-1 text-base text-ink-soft">{meta}</p>}
 
-        <ul className="mt-6 space-y-4">
+        {w.summary && <p className="mt-6 text-lg leading-relaxed text-ink-soft">{w.summary}</p>}
+
+        {w.screenshots?.[0] && (
+          <div className="mt-8">
+            <Screenshot {...w.screenshots[0]} />
+          </div>
+        )}
+
+        <ul className="mt-6 space-y-4 empty:hidden">
           {bulletsOf(w).map((b, i) => (
             <li key={b} className="flex gap-3 text-lg leading-relaxed text-ink-soft">
               <span className="mt-1.5">
@@ -42,8 +51,14 @@ export default function JourneyEntry({ work: w, index }: { work: Work; index: nu
           href={`/work/${w.slug}`}
           className="mt-5 inline-block text-base italic text-leaf underline decoration-1 underline-offset-4 transition hover:decoration-2"
         >
-          read the full story →
+          {w.screenshots && w.screenshots.length > 1 ? "see all the screens →" : "read the full story →"}
         </Link>
+
+        {w.site && (
+          <div className="mt-3">
+            <SiteLink href={w.site} />
+          </div>
+        )}
       </div>
     </article>
   );

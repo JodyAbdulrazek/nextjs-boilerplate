@@ -23,6 +23,12 @@ export type Work = {
   /** One-line summary for cards */
   tagline: string;
   story: StorySection[];
+  /** A paragraph describing the project, shown instead of bullets */
+  summary?: string;
+  /** Screenshots of the project, in /public */
+  screenshots?: { src: string; caption: string }[];
+  /** Link to the live site */
+  site?: string;
   extras?: ExtraSection[];
   /**
    * Order of the bullets as originally written, as indexes into the story's items
@@ -36,28 +42,23 @@ export type Work = {
 
 export const projects: Work[] = [
   {
-    slug: "ai-task-management-app",
+    slug: "elara-task-management",
     kind: "project",
-    org: "AI Task Management App",
+    org: "Elara Task Management",
     role: "AI Productivity Platform",
     color: "#9FDBB4",
     tagline: "Helping people organize tasks, manage deadlines, and stay productive",
-    story: [
-      {
-        heading: "What I built",
-        items: [
-          "Built an AI-powered task management application using TypeScript, Python, and Claude API to help users organize tasks, manage deadlines, and improve productivity.",
-          "Developed features for AI task prioritization, smart scheduling, automated reminders, and breaking larger projects into manageable steps.",
-        ],
-      },
-      {
-        heading: "What I worked on",
-        items: [
-          "Designed, tested, and refined application features to create a more personalized and efficient task management experience.",
-          "Delivered product features within an Agile development environment by collaborating with teammates through Git/GitHub and iterating on functionality throughout development.",
-        ],
-      },
+    story: [],
+    summary:
+      "Elara is an interactive productivity platform designed to make organizing daily tasks simple and efficient. The platform helps users manage their responsibilities, track upcoming deadlines, and stay organized through a clean and user-friendly interface. With an AI-powered assistant that allows users to ask questions about their schedules and upcoming tasks, Elara Task Management creates a personalized experience that helps users prioritize their work, manage their time, and stay productive throughout the day.",
+    screenshots: [
+      { src: "/projects/elara/welcome.jpg", caption: "Welcome to Elara" },
+      { src: "/projects/elara/task-organization.jpg", caption: "Task Organization" },
+      { src: "/projects/elara/deadline-tracking.jpg", caption: "Deadline Tracking" },
+      { src: "/projects/elara/reminders.jpg", caption: "Reminders" },
+      { src: "/projects/elara/chatbot.jpg", caption: "Elara Chatbot" },
     ],
+    site: "https://taskmanagment-vsgo.vercel.app/",
     tech: ["TypeScript", "Python", "Claude API", "Git/GitHub"],
     skills: ["AI task prioritization", "Smart scheduling", "Automated reminders", "Designing, testing & refining features", "Agile development", "Team collaboration"],
   },
