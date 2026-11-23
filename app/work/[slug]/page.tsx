@@ -170,8 +170,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
                     <TechChips tech={w.tech} className="mt-3" />
                   </>
                 )}
-                <p className={`text-sm uppercase tracking-[0.2em] text-leaf ${w.tech.length ? "mt-6" : ""}`}>skills</p>
-                <p className="mt-2 text-xl italic leading-relaxed text-ink-soft">{w.skills.join("  ·  ")}</p>
+                <p className={`text-xl italic leading-relaxed text-ink-soft ${w.tech.length ? "mt-6" : ""}`}>{w.skills.join("  ·  ")}</p>
               </div>
             </Chapter>
           </ol>
