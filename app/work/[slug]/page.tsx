@@ -24,17 +24,14 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 const BULLET_TINTS = ["#9CC6EC", "#F4A7B9", "#F3D27A", "#B9A8E2", "#8FCFD6"];
 
-/** One step of the story, with its number on the dotted thread */
-function Chapter({ n, of, title, children }: { n: number; of: number; title: string; children: React.ReactNode }) {
+/** One step of the story, with its number in a little circle */
+function Chapter({ n, title, children }: { n: number; of?: number; title: string; children: React.ReactNode }) {
   return (
     <li className="relative pb-14 pl-14 last:pb-0">
       <span className="absolute left-0 top-0 grid h-10 w-10 place-items-center rounded-full border border-leaf/30 bg-white text-base italic text-leaf shadow-[0_4px_10px_-6px_rgba(60,100,150,0.5)]">
         {n}
       </span>
-      <p className="pt-1 text-xs uppercase tracking-[0.25em] text-ink-soft/80">
-        chapter {n} of {of}
-      </p>
-      <h2 className="mb-6 mt-1 text-3xl text-leaf sm:text-4xl">{title}</h2>
+      <h2 className="mb-6 text-3xl leading-10 text-leaf sm:text-4xl">{title}</h2>
       {children}
     </li>
   );
