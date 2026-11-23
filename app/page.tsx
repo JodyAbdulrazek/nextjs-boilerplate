@@ -35,8 +35,14 @@ export default function Home() {
             a Computer Science &amp; Economics student at Virginia Commonwealth University.
           </p>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
-            I&apos;m deeply passionate about the intersection of technology and business, and about using both to build
-            thoughtful, user-centered products.
+            Contact information -{" "}
+            <a href="tel:+15718308310" className="whitespace-nowrap underline-offset-4 hover:underline">
+              (571) 830 - 8310
+            </a>{" "}
+            &amp;{" "}
+            <a href="mailto:jody.abdelrazek@gmail.com" className="underline-offset-4 hover:underline">
+              jody.abdelrazek@gmail.com
+            </a>
           </p>
           <p className="mx-auto mt-6 max-w-xl text-lg italic text-leaf">welcome to my portfolio</p>
           <div className="mt-14">
