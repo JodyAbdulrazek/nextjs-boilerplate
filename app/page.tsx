@@ -5,8 +5,6 @@ import NextArrow from "./components/NextArrow";
 import { SparkleField } from "./components/Scenery";
 import { projects } from "./data/work";
 
-const INTERESTS = ["product design", "product management", "project management", "program management"];
-
 const SECTIONS = [
   { id: "projects", title: "Personal & Passion Projects", items: projects },
 ];
@@ -34,20 +32,13 @@ export default function Home() {
           <p className="text-xl italic text-ink-soft">hello, I&apos;m</p>
           <h1 className="name-thin mt-2 text-4xl leading-tight sm:text-5xl">Judy Abdelrazek</h1>
           <p className="mx-auto mt-6 max-w-xl text-xl leading-snug">
-            a Computer Science &amp; Business student at Virginia Commonwealth University.
+            a Computer Science &amp; Economics student at Virginia Commonwealth University.
           </p>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
             I&apos;m deeply passionate about the intersection of technology and business, and about using both to build
             thoughtful, user-centered products.
           </p>
-          <p className="mx-auto mt-6 max-w-xl text-lg italic text-leaf">
-            {INTERESTS.map((t, i) => (
-              <span key={t}>
-                <span className="whitespace-nowrap">{t}</span>
-                {i < INTERESTS.length - 1 && <span className="mx-2 not-italic text-blush">–</span>}{" "}
-              </span>
-            ))}
-          </p>
+          <p className="mx-auto mt-6 max-w-xl text-lg italic text-leaf">welcome to my portfolio</p>
           <div className="mt-14">
             <NextArrow to="projects" label="start the journey" hero />
           </div>

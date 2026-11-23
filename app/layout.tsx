@@ -4,7 +4,7 @@ import "./globals.css";
 export const metadata: Metadata = {
   title: "Judy Abdelrazek · Portfolio",
   description:
-    "Judy Abdelrazek — Computer Science & Business student at Virginia Commonwealth University, building user-centered products where technology meets business.",
+    "Judy Abdelrazek — Computer Science & Economics student at Virginia Commonwealth University, building user-centered products where technology meets business.",
 };
 
 export default function RootLayout({
