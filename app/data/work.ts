@@ -100,7 +100,7 @@ export const projects: Work[] = [
     summary:
       "Nourish is a personalized nutrition and meal-planning platform designed to make healthy eating simple, affordable, and fun. The platform helps users build balanced eating habits through personalized meal plans, healthy recipes, nutrition information, and grocery lists. By considering individual dietary preferences, nutritional needs, budgets, and ingredients already available in their pantry or fridge, Nourish creates a customized experience that helps users discover new meals, reduce food waste, save money, and develop healthier eating habits.",
     screenshots: [
-      { src: "/projects/nourish/today.jpg", caption: "Today" },
+      { src: "/projects/nourish/today.jpg", caption: "Welcome to Nourish" },
       { src: "/projects/nourish/this-week.jpg", caption: "This week & grocery list" },
       { src: "/projects/nourish/kitchen.jpg", caption: "Kitchen" },
       { src: "/projects/nourish/pantry.jpg", caption: "Pantry" },
