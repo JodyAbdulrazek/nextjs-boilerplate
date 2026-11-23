@@ -23,6 +23,8 @@ export type Work = {
   /** One-line summary for cards */
   tagline: string;
   story: StorySection[];
+  /** Short product name, for "About …" */
+  name?: string;
   /** A paragraph describing the project, shown instead of bullets */
   summary?: string;
   /** Screenshots of the project, in /public */
@@ -45,6 +47,7 @@ export const projects: Work[] = [
     slug: "elara-task-management",
     kind: "project",
     org: "Elara Task Management",
+    name: "Elara",
     role: "AI Productivity Platform",
     color: "#9FDBB4",
     tagline: "Helping people organize tasks, manage deadlines, and stay productive",
@@ -63,24 +66,25 @@ export const projects: Work[] = [
     skills: ["AI task prioritization", "Smart scheduling", "Automated reminders", "Designing, testing & refining features", "Agile development", "Team collaboration"],
   },
   {
-    slug: "therapy-cafe",
+    slug: "softly-cafe",
     kind: "project",
-    org: "Therapy Cafe",
+    org: "Softly Café",
+    name: "Softly Café",
     role: "AI Mental Health Support Platform",
     color: "#E8C9A8",
     tagline: "Personalized conversations, wellness recommendations, and mood tracking",
-    story: [
-      {
-        heading: "What I built",
-        items: [
-          "Built an AI-powered mental health support platform using GPT-4 to provide personalized conversations, wellness recommendations, mood tracking, and goal setting.",
-        ],
-      },
-      {
-        heading: "What I worked on",
-        items: ["Integrated Python, Hugging Face, and OpenAI APIs to develop NLP workflows and support personalized user interactions."],
-      },
+    story: [],
+    summary:
+      "Softly Café is an AI-powered mental wellness platform designed to make emotional support feel warm, comforting, and accessible. Inspired by the cozy atmosphere of a café, the platform creates a welcoming space where users can share their thoughts, express their feelings, and receive personalized support through an interactive AI chatbot. Through thoughtful conversations, mood tracking, wellness goals, and a collection of virtual treats like coffee, cakes, and cookies, Softly Café encourages users to reflect on their emotions, build healthy habits, and prioritize their mental well-being in a fun and engaging way.",
+    screenshots: [
+      { src: "/projects/softly-cafe/welcome.jpg", caption: "Welcome to Softly Café" },
+      { src: "/projects/softly-cafe/cafe-chat.jpg", caption: "Café Chat" },
+      { src: "/projects/softly-cafe/sign-up.jpg", caption: "Creating an account" },
+      { src: "/projects/softly-cafe/mood.jpg", caption: "Mood" },
+      { src: "/projects/softly-cafe/goals.jpg", caption: "Goals" },
+      { src: "/projects/softly-cafe/collection.jpg", caption: "Collection" },
     ],
+    site: "https://cafe-ten-mocha.vercel.app/",
     tech: ["GPT-4", "Python", "Hugging Face", "OpenAI APIs", "NLP"],
     skills: ["NLP workflows", "Personalized user interactions"],
   },

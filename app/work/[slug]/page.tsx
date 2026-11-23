@@ -100,7 +100,7 @@ export default async function WorkPage({ params }: { params: Promise<{ slug: str
           <ol className="relative">
 
             {w.summary && (
-              <Chapter n={1} of={chapters} title={`About ${w.org.split(" ")[0]}`}>
+              <Chapter n={1} of={chapters} title={`About ${w.name ?? w.org}`}>
                 <p className="text-lg leading-relaxed text-ink-soft">{w.summary}</p>
               </Chapter>
             )}
