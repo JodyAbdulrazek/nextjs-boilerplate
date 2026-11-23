@@ -35,11 +35,11 @@ export default function Home() {
             a Computer Science &amp; Economics student at Virginia Commonwealth University.
           </p>
           <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-ink-soft">
-            Contact information -{" "}
+            Contact information - phone number:{" "}
             <a href="tel:+15718308310" className="whitespace-nowrap underline-offset-4 hover:underline">
               (571) 830 - 8310
             </a>{" "}
-            &amp;{" "}
+            &amp; Email:{" "}
             <a href="mailto:jody.abdelrazek@gmail.com" className="underline-offset-4 hover:underline">
               jody.abdelrazek@gmail.com
             </a>
